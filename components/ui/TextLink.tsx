@@ -6,7 +6,6 @@ type TextLinkProps = {
 
 const TextLink: React.FC<TextLinkProps> = ({ onClickLink, children }) => {
   const StyledP = styled.p`
-  background-color:black;
     font-family: Roboto;
     color: #fbfafa;
     text-decoration: underline;
