@@ -10,19 +10,14 @@ type GraphicCharge = {
 }
 
 //TODO: Handle update position of charge
-//TODO: Make Interactive size dynamically equal to parent size
-// const containerElement = document.getElementById('my-interactive');
-// console.log(containerElement.parentElement.clientWidth);
-// console.log(containerElement.parentElement.clientHeight, window.innerHeight);
-const margin = 64; //TODO: Make Interactive size dynamically equal to parent size
 
 export const useInteractive = (canvasId: string, charges: PointCharge[], testCharge: TestCharge, hasGridLineEnabled: boolean = true) => {
+  const margin = 64;
+
   let interactive: Interactive;
   let testChargeControl: Control;
   let graphicCharges: GraphicCharge[] = [];
 
-  //TODO: Refactor this code
-  // Add charge function for painting new charge and their label
   const drawCharge = (charge: PointCharge) => {
     const isTestCharge = charge.name === 'Test Charge';
     const isPositiveCharge = charge.q > 0;
@@ -44,8 +39,6 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     };
 
     const chargeText = interactive.text(0, 0, isPositiveCharge ? '+' : '-');
-    // chargeText.fontSize = '20px';
-    // chargeText.textAnchor = 'middle';
     chargeText.addDependency(point);
     chargeText.update = function () {
       if (isPositiveCharge) {
@@ -107,28 +100,32 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
           }
               Z`;
       };
-      arrowHead.update(); //TODO: Check if not need?
     }
 
     graphicCharges.push({ pointCharge: point, position: charge.position });
   }
 
   const drawGraph = (addCharges: VoidFunction[]) => {
-    // Add axis line
+    const initialWidthSize = 50;
+    const initialHeightSize = 50;
+    const w = initialWidthSize;
+    const h = initialHeightSize;
+    const xGridNumber = Math.floor((interactive.width - 2 * margin) / w / 2);
+    const yGridNumber = Math.floor((interactive.height - 2 * margin) / h / 2);
+
     const xAxis = interactive.line(
-      -interactive.width / 2 + margin,
+      -(xGridNumber * w),
       0,
-      interactive.width / 2 - margin,
+      xGridNumber * w,
       0
     );
     const yAxis = interactive.line(
       0,
-      -interactive.height / 2 + margin,
+      -(yGridNumber * h),
       0,
-      interactive.height / 2 - margin
+      yGridNumber * h
     );
 
-    // Add graph border
     interactive.rectangle(
       xAxis.x1,
       yAxis.y1,
@@ -136,7 +133,6 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       yAxis.y2 - yAxis.y1
     );
 
-    // Add arrow head of axis
     const marker = interactive.marker(10, 5, 10, 10);
     marker.path('M 0 0 L 10 5 L 0 10 z');
     marker.setAttribute('orient', 'auto-start-reverse');
@@ -145,36 +141,28 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     yAxis.setAttribute('marker-end', `url(#${marker.id})`);
     yAxis.setAttribute('marker-start', `url(#${marker.id})`);
 
-    // Add label to axis
     const xAxisLabel = interactive.text(xAxis.x2 + 16, xAxis.y2, 'x');
     xAxisLabel.setAttribute('alignment-baseline', 'middle');
     const yAxisLabel = interactive.text(yAxis.x1, yAxis.y1 - 16, 'y');
     yAxisLabel.setAttribute('text-anchor', 'middle');
 
-    const w = 50;
-    const h = 50;
-    const xGridNumber = 6;
-    const yGridNumber = 3;
-
-    //TODO: Add logic to scale the grid from 3 x 6 dynamically to X x Y -> Maybe multiply by current number of charges?
-    //TODO: Also the initial 3 x 6 should be dynamically obtained from the parent size
     for (let i = -xGridNumber; i <= xGridNumber; i++) {
       const x = i * w;
-      const label = interactive.text(x, 120 + margin, i.toString());
+      const label = interactive.text(x, yGridNumber * h + margin / 2, i.toString());
       label.style.textAnchor = 'middle';
       label.style.alignmentBaseline = 'middle';
       if (hasGridLineEnabled) {
-        const vertical = interactive.line(x, -150, x, 150);
+        const vertical = interactive.line(x, -(yGridNumber * h), x, yGridNumber * h);
         vertical.style.strokeOpacity = '.2';
       }
     }
     for (let i = -yGridNumber; i <= yGridNumber; i++) {
       const y = i * h;
-      const label = interactive.text(-300 - 20, y, (i * -1).toString());
+      const label = interactive.text(-(xGridNumber * h) - margin / 2, y, (i * -1).toString());
       label.style.textAnchor = 'middle';
       label.style.alignmentBaseline = 'middle';
       if (hasGridLineEnabled) {
-        const horizontal = interactive.line(-300, y, 300, y);
+        const horizontal = interactive.line(-(xGridNumber * w), y, xGridNumber * w, y);
         horizontal.style.strokeOpacity = '.2';
       }
     }
@@ -182,7 +170,6 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     // Should call before below loop
     addCharges.forEach(addCharge => addCharge());
 
-    // Update position of charges
     graphicCharges.forEach(charge => {
       charge.pointCharge.constrainWithinBox(xAxis.x1, yAxis.y1, xAxis.x2, yAxis.y2);
       const boxConstraint = charge.pointCharge.constrain;
@@ -196,10 +183,14 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     })
   }
 
-  //TODO: Change to correct hook definition
   useEffect(() => {
-    //TODO: Remove all previous graph
+    const containerElement = document.getElementById(canvasId);
+    if (interactive !== undefined) {
+      interactive.clear();
+    }
     interactive = new Interactive(canvasId);
+    interactive.width = (containerElement?.parentElement?.clientWidth || 1280) - margin * 2;
+    interactive.height = (window.innerHeight || 720) - margin * 2;
     interactive.originX = interactive.width / 2 + margin;
     interactive.originY = interactive.height / 2 + margin;
     interactive.width += 2 * margin;

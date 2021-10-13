@@ -198,6 +198,7 @@ const InteractiveWrapper = styled.div`
 
 const Wrapper = styled(InteractiveWrapper)`
 	background-color: #303a52;
+  width: 100%;
 
 	.interactive .line {
 		stroke: #fbfafa;
