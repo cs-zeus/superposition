@@ -1,6 +1,6 @@
 import { Control, Interactive } from "vector-js-clone";
+import { PointCharge, TestCharge } from "cs-zeus";
 
-import { PointCharge } from "cs-zeus";
 import { Vector } from "cs-zeus/lib/vector";
 import { useEffect } from "react";
 
@@ -9,13 +9,14 @@ type GraphicCharge = {
   position: Vector;
 }
 
+//TODO: Handle update position of charge
 //TODO: Make Interactive size dynamically equal to parent size
 // const containerElement = document.getElementById('my-interactive');
 // console.log(containerElement.parentElement.clientWidth);
 // console.log(containerElement.parentElement.clientHeight, window.innerHeight);
 const margin = 64; //TODO: Make Interactive size dynamically equal to parent size
 
-export const useInteractive = (canvasId: string, charges: PointCharge[], hasGridLineEnabled: boolean = true) => {
+export const useInteractive = (canvasId: string, charges: PointCharge[], testCharge: TestCharge, hasGridLineEnabled: boolean = true) => {
   let interactive: Interactive;
   let testChargeControl: Control;
   let graphicCharges: GraphicCharge[] = [];
@@ -191,18 +192,20 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], hasGrid
         const p = boxConstraint({ x: x, y: y }, { x: x, y: y });
         return { x: p.x, y: p.y };
       };
-      charge.pointCharge.translate(charge.pointCharge.x * w, charge.pointCharge.y * h);
+      charge.pointCharge.translate(charge.position.x * w, charge.position.y * h);
     })
   }
 
   //TODO: Change to correct hook definition
   useEffect(() => {
+    //TODO: Remove all previous graph
     interactive = new Interactive(canvasId);
     interactive.originX = interactive.width / 2 + margin;
     interactive.originY = interactive.height / 2 + margin;
     interactive.width += 2 * margin;
     interactive.height += 2 * margin;
     interactive.style.overflow = 'visible';
+    drawGraph([() => drawCharge(testCharge)]);
     drawGraph(charges.map(charge => () => drawCharge(charge)));
   }, [])
 }
