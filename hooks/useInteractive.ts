@@ -1,7 +1,7 @@
 import { Control, Interactive } from "vector-js-clone";
 import { PointCharge, TestCharge } from "cs-zeus";
+import { Vector, getVector } from "cs-zeus/lib/vector";
 
-import { Vector } from "cs-zeus/lib/vector";
 import { useEffect } from "react";
 
 type GraphicCharge = {
@@ -9,9 +9,7 @@ type GraphicCharge = {
   position: Vector;
 }
 
-//TODO: Handle update position of charge
-
-export const useInteractive = (canvasId: string, charges: PointCharge[], testCharge: TestCharge, hasGridLineEnabled: boolean = true) => {
+export const useInteractive = (canvasId: string, charges: PointCharge[], testCharge: TestCharge, onChargePositionUpdate: (charge: PointCharge) => void, hasGridLineEnabled: boolean = true) => {
   const margin = 64;
 
   let interactive: Interactive;
@@ -22,64 +20,69 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     const isTestCharge = charge.name === 'Test Charge';
     const isPositiveCharge = charge.q > 0;
 
-    const point = interactive.control(charge.position.x, charge.position.y);
-    point.stroke = 'none';
+    const chargeControlPoint = interactive.control(charge.position.x, charge.position.y);
+    chargeControlPoint.stroke = 'none';
 
     if (isTestCharge) {
-      testChargeControl = point;
+      testChargeControl = chargeControlPoint;
     }
-    const circle = interactive.circle(0, 0, 20);
+    const chargeCircleBorder = interactive.circle(0, 0, 20);
     if (isTestCharge) {
-      circle.classList.add('test-charge');
+      chargeCircleBorder.classList.add('test-charge');
     }
-    circle.addDependency(point);
-    circle.update = function () {
-      this.cx = point.x;
-      this.cy = point.y;
+    chargeCircleBorder.addDependency(chargeControlPoint);
+    chargeCircleBorder.update = function () {
+      this.cx = chargeControlPoint.x;
+      this.cy = chargeControlPoint.y;
+      onChargePositionUpdate({
+        ...charge,
+        position: getVector(chargeControlPoint.x, chargeControlPoint.y)
+      })
     };
 
-    const chargeText = interactive.text(0, 0, isPositiveCharge ? '+' : '-');
-    chargeText.addDependency(point);
-    chargeText.update = function () {
+    const chargeSignText = interactive.text(0, 0, isPositiveCharge ? '+' : '-');
+    chargeSignText.addDependency(chargeControlPoint);
+    chargeSignText.update = function () {
       if (isPositiveCharge) {
-        this.x = point.x - 12;
-        this.y = point.y + 10;
+        this.x = chargeControlPoint.x - 12;
+        this.y = chargeControlPoint.y + 10;
       } else {
-        this.x = point.x - 8;
-        this.y = point.y + 11;
+        this.x = chargeControlPoint.x - 8;
+        this.y = chargeControlPoint.y + 11;
       }
     };
 
     if (isPositiveCharge) {
-      circle.classList.add('positive');
-      chargeText.classList.add('positive');
+      chargeCircleBorder.classList.add('positive');
+      chargeSignText.classList.add('positive');
     } else {
-      circle.classList.add('negative');
-      chargeText.classList.add('negative');
+      chargeCircleBorder.classList.add('negative');
+      chargeSignText.classList.add('negative');
     }
 
-    const text = interactive.text(150, 150, charge.name);
-    text.addDependency(point);
-    text.update = function () {
-      this.x = point.x - 30;
-      this.y = point.y + 40;
+    const chargeNameText = interactive.text(150, 150, charge.name);
+    chargeNameText.classList.add('charge-name')
+    chargeNameText.addDependency(chargeControlPoint);
+    chargeNameText.update = function () {
+      this.x = isTestCharge ? chargeControlPoint.x - 42 : chargeControlPoint.x - 30;
+      this.y = chargeControlPoint.y + 40;
     };
 
-    const text2 = interactive.text(150, 150, 'myText');
-    text2.addDependency(point);
-    text2.update = function () {
-      this.x = point.x - 35;
-      this.y = point.y + 60;
-      this.contents = `${charge.q}n - <${point.x / 50},${-point.y / 50}>`;
+    const chargePositionText = interactive.text(150, 150, 'myText');
+    chargePositionText.addDependency(chargeControlPoint);
+    chargePositionText.update = function () {
+      this.x = chargeControlPoint.x - 35;
+      this.y = chargeControlPoint.y + 60;
+      this.contents = `${charge.q}n - <${chargeControlPoint.x / 50},${-chargeControlPoint.y / 50}>`;
     };
 
     if (!isTestCharge) {
-      const arrowBody = interactive.line(point.x, point.y, testChargeControl.x, testChargeControl.y);
+      const arrowBody = interactive.line(chargeControlPoint.x, chargeControlPoint.y, testChargeControl.x, testChargeControl.y);
       arrowBody.addDependency(testChargeControl);
-      arrowBody.addDependency(point);
+      arrowBody.addDependency(chargeControlPoint);
       arrowBody.update = function () {
-        this.x1 = point.x;
-        this.y1 = point.y;
+        this.x1 = chargeControlPoint.x;
+        this.y1 = chargeControlPoint.y;
         this.x2 = testChargeControl.x;
         this.y2 = testChargeControl.y;
       };
@@ -87,11 +90,11 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       const arrowHead = interactive.path('');
       arrowHead.classList.add('arrow');
       arrowHead.addDependency(testChargeControl);
-      arrowHead.addDependency(point);
+      arrowHead.addDependency(chargeControlPoint);
       arrowHead.update = function () {
         const r = 8;
         const offset = 0;
-        const angle = Math.atan2(testChargeControl.y - point.y, testChargeControl.x - point.x);
+        const angle = Math.atan2(testChargeControl.y - chargeControlPoint.y, testChargeControl.x - chargeControlPoint.x);
         this.d = `M ${testChargeControl.x + 1.3 * r * Math.cos(angle)} ${testChargeControl.y + 1.3 * r * Math.sin(angle) + offset
           }
     L ${testChargeControl.x + r * Math.cos(angle - (2 * Math.PI) / 3)} ${testChargeControl.y + r * Math.sin(angle - (2 * Math.PI) / 3) + offset
@@ -102,7 +105,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       };
     }
 
-    graphicCharges.push({ pointCharge: point, position: charge.position });
+    graphicCharges.push({ pointCharge: chargeControlPoint, position: charge.position });
   }
 
   const drawGraph = (addCharges: VoidFunction[]) => {

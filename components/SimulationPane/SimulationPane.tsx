@@ -7,6 +7,7 @@ import { useInteractive } from '../../hooks/useInteractive';
 type SimulationPaneProps = {
 	charges: PointCharge[];
 	testCharge: TestCharge;
+	onChargePositionUpdate: (charge: PointCharge) => void;
 	appConfig: AppConfig;
 };
 
@@ -15,9 +16,16 @@ const canvasId = 'simulation-pane';
 const SimulationPane: React.FC<SimulationPaneProps> = ({
 	charges,
 	testCharge,
+	onChargePositionUpdate,
 	appConfig,
 }) => {
-	useInteractive(canvasId, charges, testCharge, appConfig.hasGridLineEnabled);
+	useInteractive(
+		canvasId,
+		charges,
+		testCharge,
+		onChargePositionUpdate,
+		appConfig.hasGridLineEnabled
+	);
 
 	return <Wrapper id={canvasId}></Wrapper>;
 };
@@ -198,62 +206,68 @@ const InteractiveWrapper = styled.div`
 
 const Wrapper = styled(InteractiveWrapper)`
 	background-color: #303a52;
-  width: 100%;
+	width: 100%;
 
-	.interactive .line {
-		stroke: #fbfafa;
-	}
+	.interactive {
+		.line {
+			stroke: #fbfafa;
+		}
 
-	.interactive .circle {
-		fill: none;
-		stroke: #fbfafa;
-		stroke-width: 2px;
-	}
+		.circle {
+			fill: none;
+			stroke: #fbfafa;
+			stroke-width: 2px;
 
-	.interactive .circle.point {
-		stroke: none;
-	}
+			&.positive {
+				stroke: none;
+				fill: #eb5757;
+			}
 
-	.interactive .circle.positive {
-		stroke: none;
-		fill: #eb5757;
-	}
+			&.negative {
+				stroke: none;
+				fill: #56ccf2;
+			}
 
-	.interactive .circle.negative {
-		stroke: none;
-		fill: #56ccf2;
-	}
+			&.test-charge {
+				stroke: #fbfafa;
+				stroke-dasharray: 6;
+				stroke-width: 3px;
+			}
 
-	.interactive .circle.test-charge {
-		stroke: #fbfafa;
-		stroke-dasharray: 6;
-		stroke-width: 3px;
-	}
+			&.point {
+				stroke: none;
+			}
+		}
 
-	.interactive .text {
-		fill: #fbfafa;
-		stroke: none;
-	}
+		.text {
+			fill: #fbfafa;
+			stroke: none;
 
-	.interactive .text.positive,
-	.interactive .text.negative {
-		fill: #303a52;
-		font-size: 2.5rem;
-	}
+			&.charge-name {
+				font-weight: bold;
+			}
 
-	.interactive .rectangle {
-		stroke: #fbfafa;
-		stroke-width: 2px;
-		fill: none;
-	}
+			&.positive,
+			&.negative {
+				fill: #303a52;
+				font-size: 2.5rem;
+			}
+		}
 
-	.interactive .path {
-		fill: #fbfafa;
-	}
+		.rectangle {
+			stroke: #fbfafa;
+			stroke-width: 2px;
+			fill: none;
+		}
 
-	.interactive .arrow {
-		fill: #fbfafa;
-		stroke: none;
+		.path {
+			fill: #fbfafa;
+		}
+
+		.arrow {
+			fill: #fbfafa;
+			stroke: none;
+		}
 	}
 `;
 
