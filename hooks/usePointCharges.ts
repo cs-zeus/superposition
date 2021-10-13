@@ -30,5 +30,5 @@ export const usePointCharges = () => {
     setPointCharges((prev) => prev.filter((charge) => charge.name !== chargeName));
   };
 
-  return [pointCharges, addPointChargeHandler, editChargeHandler, editPositionHandler, removePointChargeHandler];
+  return { pointCharges, addPointChargeHandler, editChargeHandler, editPositionHandler, removePointChargeHandler };
 }

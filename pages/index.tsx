@@ -1,28 +1,26 @@
-import { PointCharge, TestCharge } from 'cs-zeus';
-
-import { AppConfig } from '../types/AppConfig';
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import SimulationPane from '../components/SimulationPane/SimulationPane';
+import { TestCharge } from 'cs-zeus';
 import styled from 'styled-components';
 import { useAppConfig } from '../hooks/useAppConfig';
 import { usePointCharges } from '../hooks/usePointCharges';
 
 const Home: NextPage = () => {
-	const [
+	const {
 		appConfig,
 		toggleGridLineHandler,
 		openModalHandler,
 		closeModalHandler,
-	] = useAppConfig();
+	} = useAppConfig();
 
-	const [
+	const {
 		pointCharges,
 		addPointChargeHandler,
 		editChargeHandler,
 		editPositionHandler,
 		removePointChargeHandler,
-	] = usePointCharges();
+	} = usePointCharges();
 
 	return (
 		<>
@@ -37,20 +35,19 @@ const Home: NextPage = () => {
 			<Wrapper>
 				<LeftPane>
 					<SimulationPane
-						appConfig={appConfig as AppConfig}
-						charges={(pointCharges as PointCharge[]).filter(
+						appConfig={appConfig}
+						charges={pointCharges.filter(
 							(charge) => charge.name !== 'Test Charge'
 						)}
 						testCharge={
-							(pointCharges as PointCharge[]).filter(
+							pointCharges.filter(
 								(charge) => charge.name === 'Test Charge'
 							)[0] as TestCharge
 						}
+						onChargePositionUpdate={editPositionHandler}
 					/>
 				</LeftPane>
-				<RightPane>
-					ConfigurationPane
-				</RightPane>
+				<RightPane>ConfigurationPane</RightPane>
 			</Wrapper>
 		</>
 	);

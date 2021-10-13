@@ -23,6 +23,6 @@ export const useAppConfig = () => {
     setAppConfig((prev) => ({ ...prev, isShowModal: false }));
   };
 
-  return [appConfig, toggleGridLineHandler, openModalHandler, closeModalHandler];
+  return { appConfig, toggleGridLineHandler, openModalHandler, closeModalHandler };
 }
 
