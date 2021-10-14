@@ -208,67 +208,51 @@ const Wrapper = styled(InteractiveWrapper)`
 	background-color: #303a52;
 	width: 100%;
 
-	.interactive {
-		.line {
-			stroke: #fbfafa;
-		}
-
-		.circle {
-			fill: none;
-			stroke: #fbfafa;
-			stroke-width: 2px;
-
-			&.positive {
-				stroke: none;
-				fill: #eb5757;
-			}
-
-			&.negative {
-				stroke: none;
-				fill: #56ccf2;
-			}
-
-			&.test-charge {
-				stroke: #fbfafa;
-				stroke-dasharray: 6;
-				stroke-width: 3px;
-			}
-
-			&.point {
-				stroke: none;
-			}
-		}
-
-		.text {
-			fill: #fbfafa;
-			stroke: none;
-
-			&.charge-name {
-				font-weight: bold;
-			}
-
-			&.positive,
-			&.negative {
-				fill: #303a52;
-				font-size: 2.5rem;
-			}
-		}
-
-		.rectangle {
-			stroke: #fbfafa;
-			stroke-width: 2px;
-			fill: none;
-		}
-
-		.path {
-			fill: #fbfafa;
-		}
-
-		.arrow {
-			fill: #fbfafa;
-			stroke: none;
-		}
-	}
+	.interactive .line {
+ 		stroke: #fbfafa;
+ 	}
+ 	.interactive .circle {
+ 		fill: none;
+ 		stroke: #fbfafa;
+ 		stroke-width: 2px;
+ 	}
+ 	.interactive .circle.point {
+ 		stroke: none;
+ 	}
+ 	.interactive .circle.positive {
+ 		stroke: none;
+ 		fill: #eb5757;
+ 	}
+ 	.interactive .circle.negative {
+ 		stroke: none;
+ 		fill: #56ccf2;
+ 	}
+ 	.interactive .circle.test-charge {
+ 		stroke: #fbfafa;
+ 		stroke-dasharray: 6;
+ 		stroke-width: 3px;
+ 	}
+ 	.interactive .text {
+ 		fill: #fbfafa;
+ 		stroke: none;
+ 	}
+ 	.interactive .text.positive,
+ 	.interactive .text.negative {
+ 		fill: #303a52;
+ 		font-size: 2.5rem;
+ 	}
+ 	.interactive .rectangle {
+ 		stroke: #fbfafa;
+ 		stroke-width: 2px;
+ 		fill: none;
+ 	}
+ 	.interactive .path {
+ 		fill: #fbfafa;
+ 	}
+ 	.interactive .arrow {
+ 		fill: #fbfafa;
+ 		stroke: none;
+ 	}
 `;
 
 export default SimulationPane;
