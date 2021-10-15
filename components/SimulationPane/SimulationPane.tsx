@@ -30,7 +30,10 @@ const SimulationPane: React.FC<SimulationPaneProps> = ({
 	return <Wrapper id={canvasId}></Wrapper>;
 };
 
-const InteractiveWrapper = styled.div`
+const Wrapper = styled.div`
+	background-color: #303a52;
+	width: 100%;
+
 	.window {
 		display: block;
 		margin: 0 auto 1.5em auto;
@@ -202,11 +205,6 @@ const InteractiveWrapper = styled.div`
 	.dropdown-control-button:hover text {
 		fill: #c7c1c1;
 	}
-`;
-
-const Wrapper = styled(InteractiveWrapper)`
-	background-color: #303a52;
-	width: 100%;
 
 	.interactive .line {
 		stroke: #fbfafa;
