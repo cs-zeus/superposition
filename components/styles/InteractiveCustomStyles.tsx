@@ -5,6 +5,10 @@ const InteractiveCustomStyles = () => {
 };
 
 const styles = css`
+	.interactive {
+		font-family: 'Roboto', sans-serif;
+	}
+	
 	.interactive .control .point {
 		fill: none;
 	}
