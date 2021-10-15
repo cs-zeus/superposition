@@ -5,49 +5,58 @@ const InteractiveCustomStyles = () => {
 };
 
 const styles = css`
-	.interactive .line {
-		stroke: #fbfafa;
-	}
-	.interactive .circle {
+	.interactive .control .point {
 		fill: none;
-		stroke: #fbfafa;
+	}
+	.interactive circle.handle {
+		stroke: var(--white);
+	}
+	.interactive line {
+		stroke: var(--white);
+	}
+	.interactive circle {
+		fill: none;
+		stroke: var(--white);
 		stroke-width: 2px;
 	}
-	.interactive .circle.point {
+	.interactive circle.point {
 		stroke: none;
 	}
-	.interactive .circle.positive {
+	.interactive circle.positive {
 		stroke: none;
-		fill: #eb5757;
+		fill: var(--red);
 	}
-	.interactive .circle.negative {
+	.interactive circle.negative {
 		stroke: none;
-		fill: #56ccf2;
+		fill: var(--blue);
 	}
-	.interactive .circle.test-charge {
-		stroke: #fbfafa;
+	.interactive circle.test-charge {
+		stroke: var(--white);
 		stroke-dasharray: 6;
 		stroke-width: 3px;
 	}
-	.interactive .text {
-		fill: #fbfafa;
+	.interactive text {
+		fill: var(--white);
 		stroke: none;
 	}
-	.interactive .text.positive,
-	.interactive .text.negative {
-		fill: #303a52;
+	.interactive text.positive,
+	.interactive text.negative {
+		fill: var(----background);
 		font-size: 2.5rem;
 	}
-	.interactive .rectangle {
-		stroke: #fbfafa;
+	.interactive text.charge-name {
+		font-weight: bold;
+	}
+	.interactive rect {
+		stroke: var(--white);
 		stroke-width: 2px;
 		fill: none;
 	}
-	.interactive .path {
-		fill: #fbfafa;
+	.interactive path {
+		fill: var(--white);
 	}
 	.interactive .arrow {
-		fill: #fbfafa;
+		fill: var(--white);
 		stroke: none;
 	}
 `;
