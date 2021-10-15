@@ -2,7 +2,7 @@ import Head from 'next/head';
 import type { NextPage } from 'next';
 import SimulationPane from '../components/SimulationPane/SimulationPane';
 import { TestCharge } from 'cs-zeus';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { useAppConfig } from '../hooks/useAppConfig';
 import { usePointCharges } from '../hooks/usePointCharges';
 
