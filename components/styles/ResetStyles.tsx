@@ -1,10 +1,10 @@
 import { Global, css } from '@emotion/react';
 
-const GlobalStyles = () => {
-	return <Global styles={style}></Global>;
+const ResetStyles = () => {
+	return <Global styles={styles} />;
 };
 
-const style = css`
+const styles = css`
 	/* http://meyerweb.com/eric/tools/css/reset/ 
 v2.0 | 20110126
 License: none (public domain)
@@ -136,4 +136,4 @@ License: none (public domain)
 	}
 `;
 
-export default GlobalStyles;
+export default ResetStyles;
