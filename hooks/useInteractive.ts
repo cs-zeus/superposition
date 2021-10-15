@@ -68,7 +68,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       this.y = chargeControlPoint.y + 40;
     };
 
-    const chargePositionText = interactive.text(150, 150, 'myText');
+    const chargePositionText = interactive.text(150, 150, '');
     chargePositionText.addDependency(chargeControlPoint);
     chargePositionText.update = function () {
       this.x = chargeControlPoint.x - 35;
