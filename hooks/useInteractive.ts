@@ -44,11 +44,11 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     chargeSignText.addDependency(chargeControlPoint);
     chargeSignText.update = function () {
       if (isPositiveCharge) {
-        this.x = chargeControlPoint.x - 12;
-        this.y = chargeControlPoint.y + 10;
+        this.x = chargeControlPoint.x - 11.5;
+        this.y = chargeControlPoint.y + 13.5;
       } else {
-        this.x = chargeControlPoint.x - 8;
-        this.y = chargeControlPoint.y + 11;
+        this.x = chargeControlPoint.x - 5;
+        this.y = chargeControlPoint.y + 12;
       }
     };
 
@@ -86,6 +86,21 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
         this.x2 = testChargeControl.x;
         this.y2 = testChargeControl.y;
       };
+
+      const arrowText = interactive.text((arrowBody.x1 + arrowBody.x2) / 2, (arrowBody.y1 + arrowBody.y2) / 2, 'r');
+      arrowText.addDependency(arrowBody);
+      arrowText.update = function () {
+        this.x = (arrowBody.x1 + arrowBody.x2) / 2 + 10;
+        this.y = (arrowBody.y1 + arrowBody.y2) / 2;
+      }
+      
+      const arrowTextSubscript = interactive.text((arrowBody.x1 + arrowBody.x2) / 2, (arrowBody.y1 + arrowBody.y2) / 2, `${charge.name.split(' ')[1]}T`);
+      arrowTextSubscript.addDependency(arrowBody);
+      arrowTextSubscript.classList.add('subscript')
+      arrowTextSubscript.update = function () {
+        this.x = (arrowBody.x1 + arrowBody.x2) / 2 + 14;
+        this.y = (arrowBody.y1 + arrowBody.y2) / 2 + 7;
+      }
 
       const arrowHead = interactive.path('');
       arrowHead.classList.add('arrow');
