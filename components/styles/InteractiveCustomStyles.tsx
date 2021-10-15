@@ -43,6 +43,9 @@ const styles = css`
 		fill: var(--white);
 		stroke: none;
 	}
+	.interactive text.subscript {
+		font-size: 0.5em;
+	}
 	.interactive text.positive,
 	.interactive text.negative {
 		fill: var(----background);

@@ -4,6 +4,8 @@ import { useState } from "react";
 export const usePointCharges = () => {
   const initialCharges = [
     { name: 'Test Charge', position: { x: 0, y: 0 }, q: 1 },
+    { name: 'Charge 1', position: { x: 1, y: 1 }, q: -1 },
+    { name: 'Charge 2', position: { x: 1, y: 2 }, q: 1 },
   ];
 
   const [pointCharges, setPointCharges] = useState<PointCharge[]>(initialCharges);
