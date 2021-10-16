@@ -13,7 +13,7 @@ const TextLink: React.FC<TextLinkProps> = ({
 }) => {
   const StyledSpan = styled.span`
     ${hasIcon && "margin-left: 0.5rem;"}
-    // text-decoration: underline;
+    text-decoration: underline;
   `;
 
   const StyledP = styled.p`
