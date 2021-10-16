@@ -6,7 +6,11 @@ const GlobalStyles = () => {
 
 const styles = css`
 	:root {
+		--primary-color: #574b90;
+		--secondary-color: #9e579d;
+		--accent-color: #fc85ae;
 		--white: #fbfafa;
+		--off-white: #c4c4c4;
 		--red: #eb5757;
 		--blue: #56ccf2;
 		--background: #303a52;
