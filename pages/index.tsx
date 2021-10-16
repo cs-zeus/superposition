@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
-
+import PrimaryButton from '../components/UI components/PrimaryButton';
 const Home: NextPage = () => {
 	return (
 		<div>
@@ -14,6 +14,7 @@ const Home: NextPage = () => {
 				<h1>
 					Hello World
 				</h1>
+				<PrimaryButton>ADD</PrimaryButton>
 			</main>
 		</div>
 	);
