@@ -14,6 +14,7 @@ const styles = css`
 		--red: #eb5757;
 		--blue: #56ccf2;
 		--background: #303a52;
+		--text-color: #000000;
 	}
 
 	html,
