@@ -21,39 +21,67 @@ const CalculationResultSection: React.FC<CalculationResultSectionProps> = ({
     charges,
     testCharge,
 }) => {
+    const eTotal = getElectricField(charges, testCharge)
+    const eTotalUnitVectorLatex = buildLatexUnitVectorMatrix(
+        getUnitVector(eTotal)
+    )
+    const eComponentEquation = charges.reduce((prevRawLatex, charge) => {
+        return (
+            prevRawLatex + `\\vec{E}_{${charge.name.replace('Charge', '')}t} + `
+        )
+    }, '')
+    const eComponentCalculation = charges.reduce((prevRawLatex, charge) => {
+        const r = subtractVector(testCharge.position, charge.position)
+        const unitVectorR = getUnitVector(r)
+        const unitVectorMatrix = buildLatexUnitVectorMatrix(unitVectorR)
+        return (
+            prevRawLatex +
+            `${getVectorSize(getElectricField([charge], testCharge)).toFixed(
+                2
+            )}${unitVectorMatrix} + `
+        )
+    }, '')
+    const eTotalLatex = `$$\\vec{E}_{total} = ${eComponentEquation.substr(
+        0,
+        eComponentEquation.length - 2
+    )} = ${eComponentCalculation.substr(
+        0,
+        eComponentCalculation.length - 2
+    )} = ${getVectorSize(eTotal)}${eTotalUnitVectorLatex}$$`
+    const fTotalLatex = `$$\\vec{F}_{total} = $$`
     return (
         <Wrapper>
             <SectionTitle>Calculation</SectionTitle>
             {charges.map(charge => {
-                const lawLatex = `$$E_{${charge.name.replace(
-                    'Charge',
-                    ''
-                )}T} = \\frac{kQ}{(r_{${charge.name.replace(
-                    'Charge',
-                    ''
-                )}T})^2}\\widehat{r}_{${charge.name.replace(
-                    'Charge',
-                    ''
-                )}T} = \\frac{(9.0 \\times 10^9) \\times (${
+                const r = subtractVector(testCharge.position, charge.position)
+                const rUnitVector = getUnitVector(r)
+                const rUnitVectorLatexMatrix =
+                    buildLatexUnitVectorMatrix(rUnitVector)
+                const e = getElectricField([charge], testCharge)
+                const eUnitVector = getUnitVector(e)
+                const eUnitVectorLatexMatrix =
+                    buildLatexUnitVectorMatrix(eUnitVector)
+                const chargeName = charge.name.replace('Charge', '')
+                const lawLatex = `$$\\vec{E}_{${chargeName}T} = \\frac{kQ}{(r_{${chargeName}T})^2}\\widehat{r}_{${chargeName}T} = \\frac{(9.0 \\times 10^{-9}) \\times (${
                     charge.q
                 } \\times 1.602^{-19})}{(${getVectorDistance(
                     charge.position,
                     testCharge.position
-                ).toFixed(2)})^2}${buildLatexUnitVectorMatrix(
-                    getUnitVector(
-                        subtractVector(charge.position, testCharge.position)
-                    )
-                )} = ${getVectorSize(
-                    getElectricField([charge], testCharge)
-                ).toFixed(2)}${buildLatexUnitVectorMatrix(
-                    getUnitVector(getElectricField([charge], testCharge))
-                )} \\frac{N}{C}$$`
+                ).toFixed(2)})^2}${rUnitVectorLatexMatrix} = ${getVectorSize(
+                    e
+                ).toFixed(2)}${eUnitVectorLatexMatrix} \\frac{N}{C}$$`
                 return (
                     <Equation key={`electric-field-from-${charge.name}`}>
                         <Latex>{lawLatex}</Latex>
                     </Equation>
                 )
             })}
+            <Equation key="E-total">
+                <Latex>{eTotalLatex}</Latex>
+            </Equation>
+            <Equation key="F-total">
+                <Latex>{fTotalLatex}</Latex>
+            </Equation>
         </Wrapper>
     )
 }
