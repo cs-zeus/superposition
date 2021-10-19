@@ -967,9 +967,9 @@ crypto-browserify@3.12.0, crypto-browserify@^3.11.0:
     randomfill "^1.0.3"
 
 cs-zeus@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/cs-zeus/-/cs-zeus-1.0.0.tgz"
-  integrity sha512-+nuksAhSd8E+ZD4BPjxNrimuFoUEMIJ+rp4n0tc/q+trLc5ljItUAbefnxDjMtl55cIujkTKmRbPi896cRad0w==
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/cs-zeus/-/cs-zeus-1.0.1.tgz#39c8f7799d8dfc5acf60d6d3068fd392a2ddc820"
+  integrity sha512-weo2VyTmpYItnQaxO2Rc6Z76F726kHevdJqy8FuTsCXHuHWI0T03fk7X49Xjwa6o54u7ViGvba+nXMI08/D5Rw==
 
 css.escape@1.5.1:
   version "1.5.1"
