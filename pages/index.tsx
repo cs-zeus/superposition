@@ -5,6 +5,7 @@ import { TestCharge } from 'cs-zeus';
 import styled from '@emotion/styled';
 import { useAppConfig } from '../hooks/useAppConfig';
 import { usePointCharges } from '../hooks/usePointCharges';
+import CalculationResultSection from '../components/ConfigurationPane/CalculationResultSection';
 
 const Home: NextPage = () => {
 	const {
@@ -21,7 +22,12 @@ const Home: NextPage = () => {
 		editPositionHandler,
 		removePointChargeHandler,
 	} = usePointCharges();
-
+	const charges = pointCharges.filter(
+		(charge) => charge.name !== 'Test Charge'
+	);
+	const testCharge = pointCharges.filter(
+		(charge) => charge.name === 'Test Charge'
+	)[0] as TestCharge;
 	return (
 		<>
 			<Head>
@@ -36,18 +42,15 @@ const Home: NextPage = () => {
 				<LeftPane>
 					<SimulationPane
 						appConfig={appConfig}
-						charges={pointCharges.filter(
-							(charge) => charge.name !== 'Test Charge'
-						)}
-						testCharge={
-							pointCharges.filter(
-								(charge) => charge.name === 'Test Charge'
-							)[0] as TestCharge
-						}
+						charges={charges}
+						testCharge={testCharge}
 						onChargePositionUpdate={editPositionHandler}
 					/>
 				</LeftPane>
-				<RightPane>ConfigurationPane</RightPane>
+				<RightPane>
+					ConfigurationPane
+					<CalculationResultSection charges={charges} testCharge={testCharge} />
+				</RightPane>
 			</Wrapper>
 		</>
 	);

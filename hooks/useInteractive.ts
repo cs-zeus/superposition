@@ -9,6 +9,11 @@ type GraphicCharge = {
   position: Vector;
 }
 
+const initialWidthSize = 50;
+const initialHeightSize = 50;
+const w = initialWidthSize;
+const h = initialHeightSize;
+
 export const useInteractive = (canvasId: string, charges: PointCharge[], testCharge: TestCharge, onChargePositionUpdate: (charge: PointCharge) => void, hasGridLineEnabled: boolean = true) => {
   const margin = 64;
 
@@ -34,9 +39,10 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     chargeCircleBorder.update = function () {
       this.cx = chargeControlPoint.x;
       this.cy = chargeControlPoint.y;
+
       onChargePositionUpdate({
         ...charge,
-        position: getVector(chargeControlPoint.x, chargeControlPoint.y)
+        position: getVector(chargeControlPoint.x / w, chargeControlPoint.y / h)
       })
     };
 
@@ -73,7 +79,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     chargePositionText.update = function () {
       this.x = chargeControlPoint.x - 35;
       this.y = chargeControlPoint.y + 60;
-      this.contents = `${charge.q}n - <${chargeControlPoint.x / 50},${-chargeControlPoint.y / 50}>`;
+      this.contents = `${charge.q}e - <${chargeControlPoint.x / 50},${-chargeControlPoint.y / 50}>`;
     };
 
     if (!isTestCharge) {
@@ -93,7 +99,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
         this.x = (arrowBody.x1 + arrowBody.x2) / 2 + 10;
         this.y = (arrowBody.y1 + arrowBody.y2) / 2;
       }
-      
+
       const arrowTextSubscript = interactive.text((arrowBody.x1 + arrowBody.x2) / 2, (arrowBody.y1 + arrowBody.y2) / 2, `${charge.name.split(' ')[1]}T`);
       arrowTextSubscript.addDependency(arrowBody);
       arrowTextSubscript.classList.add('subscript')
@@ -124,10 +130,6 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
   }
 
   const drawGraph = (addCharges: VoidFunction[]) => {
-    const initialWidthSize = 50;
-    const initialHeightSize = 50;
-    const w = initialWidthSize;
-    const h = initialHeightSize;
     const xGridNumber = Math.floor((interactive.width - 2 * margin) / w / 2);
     const yGridNumber = Math.floor((interactive.height - 2 * margin) / h / 2);
 
