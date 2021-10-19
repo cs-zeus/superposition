@@ -79,7 +79,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     chargePositionText.update = function () {
       this.x = chargeControlPoint.x - 35;
       this.y = chargeControlPoint.y + 60;
-      this.contents = `${charge.q}n - <${chargeControlPoint.x / 50},${-chargeControlPoint.y / 50}>`;
+      this.contents = `${charge.q}e - <${chargeControlPoint.x / 50},${-chargeControlPoint.y / 50}>`;
     };
 
     if (!isTestCharge) {
