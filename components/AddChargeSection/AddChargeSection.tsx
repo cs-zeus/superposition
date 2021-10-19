@@ -8,10 +8,10 @@ const AddChargeSection = () => {
     <Wrapper>
       <Heading>Charges</Heading>
       <NewParagraph>
-        Electric charge: <TextField defaultValue={0} /> <Span>n Columb</Span>
+        Electric charge: <TextField defaultValue={0} /> <Span>e Columb</Span>
       </NewParagraph>
       <NewParagraph>
-        <Span>(n = 1.6 x 10^(-19))</Span>
+        <Span>(e = 1.6 x 10^(-19))</Span>
       </NewParagraph>
       <StyledButton>Add</StyledButton>
     </Wrapper>
