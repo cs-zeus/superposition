@@ -11,15 +11,21 @@ const ConfigSection = () => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <Heading>Simulation Configuration</Heading>
       <ParamWrapper>
         <NewParagraph>Gridline</NewParagraph>
         <ToggleButton onToggle={toggleHandler} isOn={isOnGrid} />
       </ParamWrapper>
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+	margin-top: 2rem;
+	padding: 2rem;
+  background-color: var(--primary-color);
+`;
 
 const Heading = styled.h2`
   margin-bottom: 1rem;
