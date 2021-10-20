@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import { useAppConfig } from '../hooks/useAppConfig';
 import { usePointCharges } from '../hooks/usePointCharges';
 import CalculationResultSection from '../components/ConfigurationPane/CalculationResultSection';
+import Footer from '../components/ConfigurationPane/Footer';
 
 const Home: NextPage = () => {
 	const {
@@ -50,6 +51,7 @@ const Home: NextPage = () => {
 				<RightPane>
 					ConfigurationPane
 					<CalculationResultSection charges={charges} testCharge={testCharge} />
+					<Footer onClickHandle={openModalHandler} />
 				</RightPane>
 			</Wrapper>
 		</>
