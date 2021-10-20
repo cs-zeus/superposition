@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 import TextLink from '../ui/TextLink';
 
 type FooterProps = {
-	onClickHandle: () => void;
+	onClickExplanationLink: () => void;
 };
 
-const Footer: React.FC<FooterProps> = ({ onClickHandle }) => {
+const Footer: React.FC<FooterProps> = ({ onClickExplanationLink }) => {
 	return (
 		<Wrapper>
-			<TextLink onClickLink={onClickHandle} hasIcon={true}>
-				Explaination
+			<TextLink onClickLink={onClickExplanationLink} hasIcon={true}>
+				Explanation
 			</TextLink>
 			<StyledHr></StyledHr>
 			<StyledP>Presented to CSC289 by cs-zeus</StyledP>
