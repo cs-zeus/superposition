@@ -7,6 +7,7 @@ import { useAppConfig } from '../hooks/useAppConfig';
 import { usePointCharges } from '../hooks/usePointCharges';
 import CalculationResultSection from '../components/ConfigurationPane/CalculationResultSection';
 import Footer from '../components/ConfigurationPane/Footer';
+import EditDeleteChargesSection from '../components/ConfigurationPane/EditDeleteChargesSection';
 
 const Home: NextPage = () => {
 	const {
@@ -50,6 +51,11 @@ const Home: NextPage = () => {
 				</LeftPane>
 				<RightPane>
 					ConfigurationPane
+					<EditDeleteChargesSection
+						charges={charges}
+						onEditHandler={editChargeHandler}
+						onDeleteHandler={removePointChargeHandler}
+					/>
 					<CalculationResultSection charges={charges} testCharge={testCharge} />
 					<Footer onClickExplanationLink={openModalHandler} />
 				</RightPane>
