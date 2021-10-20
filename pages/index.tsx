@@ -51,7 +51,7 @@ const Home: NextPage = () => {
 				<RightPane>
 					ConfigurationPane
 					<CalculationResultSection charges={charges} testCharge={testCharge} />
-					<Footer onClickHandle={openModalHandler} />
+					<Footer onClickExplanationLink={openModalHandler} />
 				</RightPane>
 			</Wrapper>
 		</>
