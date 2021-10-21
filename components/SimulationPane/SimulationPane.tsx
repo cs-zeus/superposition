@@ -2,6 +2,7 @@ import { PointCharge, TestCharge } from 'cs-zeus';
 
 import { AppConfig } from '../../types/AppConfig';
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
 import { useInteractive } from '../../hooks/useInteractive';
 
 type SimulationPaneProps = {
@@ -19,13 +20,21 @@ const SimulationPane: React.FC<SimulationPaneProps> = ({
 	onChargePositionUpdate,
 	appConfig,
 }) => {
-	useInteractive(
+	const { updateCharges, updateTestCharge } = useInteractive(
 		canvasId,
 		charges,
 		testCharge,
 		onChargePositionUpdate,
 		appConfig.hasGridLineEnabled
 	);
+
+	useEffect(() => {
+		updateCharges(charges);
+	}, [charges]);
+
+	useEffect(() => {
+		updateTestCharge(testCharge);
+	}, [testCharge]);
 
 	return <Wrapper id={canvasId}></Wrapper>;
 };

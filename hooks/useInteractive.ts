@@ -1,94 +1,104 @@
-import { Control, Interactive } from "vector-js-clone";
+import { Circle, Control, Interactive, Line, Path, Text } from "vector-js-clone";
 import { PointCharge, TestCharge } from "cs-zeus";
-import { Vector, getVector } from "cs-zeus/lib/vector";
 
+import { getVector } from "cs-zeus/lib/vector";
 import { useEffect } from "react";
 
 type GraphicCharge = {
-  pointCharge: Control;
-  position: Vector;
+  chargeControl: Control;
+  chargeNameText: Text;
+  chargeSignText: Text;
+  chargePositionText: Text;
+  chargeCircle: Circle;
+  charge: PointCharge;
+  arrow?: {
+    arrowHead: Path; arrowBody: Line; arrowText: Text; arrowTextSubscript: Text;
+  }
 }
 
 const initialWidthSize = 50;
 const initialHeightSize = 50;
 const w = initialWidthSize;
 const h = initialHeightSize;
+const margin = 64;
+
+const graphicCharges: GraphicCharge[] = [];
+let testChargeControl: Control;
+let interactive: Interactive;
 
 export const useInteractive = (canvasId: string, charges: PointCharge[], testCharge: TestCharge, onChargePositionUpdate: (charge: PointCharge) => void, hasGridLineEnabled: boolean = true) => {
-  const margin = 64;
-
-  let interactive: Interactive;
-  let testChargeControl: Control;
-  let graphicCharges: GraphicCharge[] = [];
-
   const drawCharge = (charge: PointCharge) => {
     const isTestCharge = charge.name === 'Test Charge';
     const isPositiveCharge = charge.q > 0;
 
-    const chargeControlPoint = interactive.control(charge.position.x, charge.position.y);
-    chargeControlPoint.stroke = 'none';
+    const chargeControl = interactive.control(charge.position.x, charge.position.y);
+    chargeControl.stroke = 'none';
 
     if (isTestCharge) {
-      testChargeControl = chargeControlPoint;
+      testChargeControl = chargeControl;
     }
-    const chargeCircleBorder = interactive.circle(0, 0, 20);
+    const chargeCircle = interactive.circle(0, 0, 20);
     if (isTestCharge) {
-      chargeCircleBorder.classList.add('test-charge');
+      chargeCircle.classList.add('test-charge');
     }
-    chargeCircleBorder.addDependency(chargeControlPoint);
-    chargeCircleBorder.update = function () {
-      this.cx = chargeControlPoint.x;
-      this.cy = chargeControlPoint.y;
+    chargeCircle.addDependency(chargeControl);
+    chargeCircle.update = function () {
+      this.cx = chargeControl.x;
+      this.cy = chargeControl.y;
 
       onChargePositionUpdate({
         ...charge,
-        position: getVector(chargeControlPoint.x / w, chargeControlPoint.y / h)
+        position: getVector(chargeControl.x / w, chargeControl.y / h)
       })
     };
 
     const chargeSignText = interactive.text(0, 0, isPositiveCharge ? '+' : '-');
-    chargeSignText.addDependency(chargeControlPoint);
+    chargeSignText.addDependency(chargeControl);
     chargeSignText.update = function () {
       if (isPositiveCharge) {
-        this.x = chargeControlPoint.x - 11.5;
-        this.y = chargeControlPoint.y + 13.5;
+        this.x = chargeControl.x - 12;
+        this.y = chargeControl.y + 11;
       } else {
-        this.x = chargeControlPoint.x - 5;
-        this.y = chargeControlPoint.y + 12;
+        this.x = chargeControl.x - 7;
+        this.y = chargeControl.y + 12;
       }
     };
 
     if (isPositiveCharge) {
-      chargeCircleBorder.classList.add('positive');
+      chargeCircle.classList.add('positive');
       chargeSignText.classList.add('positive');
     } else {
-      chargeCircleBorder.classList.add('negative');
+      chargeCircle.classList.add('negative');
       chargeSignText.classList.add('negative');
     }
 
     const chargeNameText = interactive.text(150, 150, charge.name);
     chargeNameText.classList.add('charge-name')
-    chargeNameText.addDependency(chargeControlPoint);
+    chargeNameText.addDependency(chargeControl);
     chargeNameText.update = function () {
-      this.x = isTestCharge ? chargeControlPoint.x - 42 : chargeControlPoint.x - 30;
-      this.y = chargeControlPoint.y + 40;
+      this.x = isTestCharge ? chargeControl.x - 42 : chargeControl.x - 30;
+      this.y = chargeControl.y + 40;
     };
 
     const chargePositionText = interactive.text(150, 150, '');
-    chargePositionText.addDependency(chargeControlPoint);
+    chargePositionText.addDependency(chargeControl);
     chargePositionText.update = function () {
-      this.x = chargeControlPoint.x - 35;
-      this.y = chargeControlPoint.y + 60;
-      this.contents = `${charge.q}e - <${chargeControlPoint.x / 50},${-chargeControlPoint.y / 50}>`;
+      this.x = chargeControl.x - 35;
+      this.y = chargeControl.y + 60;
+      this.contents = `${charge.q}e - <${chargeControl.x / w},${-chargeControl.y / h}>`;
     };
 
-    if (!isTestCharge) {
-      const arrowBody = interactive.line(chargeControlPoint.x, chargeControlPoint.y, testChargeControl.x, testChargeControl.y);
+    if (isTestCharge) {
+      graphicCharges.push({
+        chargeControl: chargeControl, chargeSignText, chargeNameText, chargePositionText, chargeCircle, charge
+      });
+    } else {
+      const arrowBody = interactive.line(chargeControl.x, chargeControl.y, testChargeControl.x, testChargeControl.y);
       arrowBody.addDependency(testChargeControl);
-      arrowBody.addDependency(chargeControlPoint);
+      arrowBody.addDependency(chargeControl);
       arrowBody.update = function () {
-        this.x1 = chargeControlPoint.x;
-        this.y1 = chargeControlPoint.y;
+        this.x1 = chargeControl.x;
+        this.y1 = chargeControl.y;
         this.x2 = testChargeControl.x;
         this.y2 = testChargeControl.y;
       };
@@ -111,11 +121,11 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       const arrowHead = interactive.path('');
       arrowHead.classList.add('arrow');
       arrowHead.addDependency(testChargeControl);
-      arrowHead.addDependency(chargeControlPoint);
+      arrowHead.addDependency(chargeControl);
       arrowHead.update = function () {
         const r = 8;
         const offset = 0;
-        const angle = Math.atan2(testChargeControl.y - chargeControlPoint.y, testChargeControl.x - chargeControlPoint.x);
+        const angle = Math.atan2(testChargeControl.y - chargeControl.y, testChargeControl.x - chargeControl.x);
         this.d = `M ${testChargeControl.x + 1.3 * r * Math.cos(angle)} ${testChargeControl.y + 1.3 * r * Math.sin(angle) + offset
           }
     L ${testChargeControl.x + r * Math.cos(angle - (2 * Math.PI) / 3)} ${testChargeControl.y + r * Math.sin(angle - (2 * Math.PI) / 3) + offset
@@ -124,9 +134,13 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
           }
               Z`;
       };
-    }
 
-    graphicCharges.push({ pointCharge: chargeControlPoint, position: charge.position });
+      graphicCharges.push({
+        chargeControl: chargeControl, chargeSignText, chargeNameText, chargePositionText, chargeCircle, charge, arrow: {
+          arrowHead, arrowBody, arrowText, arrowTextSubscript
+        }
+      });
+    }
   }
 
   const drawGraph = (addCharges: VoidFunction[]) => {
@@ -190,16 +204,16 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     // Should call before below loop
     addCharges.forEach(addCharge => addCharge());
 
-    graphicCharges.forEach(charge => {
-      charge.pointCharge.constrainWithinBox(xAxis.x1, yAxis.y1, xAxis.x2, yAxis.y2);
-      const boxConstraint = charge.pointCharge.constrain;
-      charge.pointCharge.constrain = (_, n) => {
+    graphicCharges.forEach(graphicCharge => {
+      graphicCharge.chargeControl.constrainWithinBox(xAxis.x1, yAxis.y1, xAxis.x2, yAxis.y2);
+      const boxConstraint = graphicCharge.chargeControl.constrain;
+      graphicCharge.chargeControl.constrain = (_, n) => {
         const x = w * Math.round(n.x / w);
         const y = h * Math.round(n.y / h);
         const p = boxConstraint({ x: x, y: y }, { x: x, y: y });
         return { x: p.x, y: p.y };
       };
-      charge.pointCharge.translate(charge.position.x * w, charge.position.y * h);
+      graphicCharge.chargeControl.translate(graphicCharge.charge.position.x * w, graphicCharge.charge.position.y * h);
     })
   }
 
@@ -208,6 +222,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     if (interactive !== undefined) {
       interactive.clear();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     interactive = new Interactive(canvasId);
     interactive.width = (containerElement?.parentElement?.clientWidth || 1280) - margin * 2;
     interactive.height = (window.innerHeight || 720) - margin * 2;
@@ -219,4 +234,100 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     drawGraph([() => drawCharge(testCharge)]);
     drawGraph(charges.map(charge => () => drawCharge(charge)));
   }, [])
+
+  const updateTestCharge = (currentTestCharge: TestCharge) => {
+    const testChargeGraphic = graphicCharges.find(graphicCharge => graphicCharge.charge.name === currentTestCharge.name);
+
+    if (!testChargeGraphic) {
+      return;
+    }
+
+    const isOldTestChargePositive = testChargeGraphic.charge.q > 0;
+    const isNewTestChargePositive = currentTestCharge.q > 0;
+
+    testChargeGraphic.chargePositionText.contents = `${currentTestCharge.q}e - <${currentTestCharge.position.x},${-currentTestCharge.position.y}>`;
+    testChargeGraphic.charge = currentTestCharge;
+    if ((isOldTestChargePositive || isNewTestChargePositive) && !(isOldTestChargePositive && isNewTestChargePositive)) {
+      testChargeGraphic.chargeSignText.contents = isNewTestChargePositive ? '+' : '-'
+      if (isNewTestChargePositive) {
+        testChargeGraphic.chargeSignText.x = testChargeGraphic.chargeControl.x - 12;
+        testChargeGraphic.chargeSignText.y = testChargeGraphic.chargeControl.y + 11;
+
+        testChargeGraphic.chargeCircle.classList.remove('negative');
+        testChargeGraphic.chargeSignText.classList.remove('negative');
+
+        testChargeGraphic.chargeCircle.classList.add('positive');
+        testChargeGraphic.chargeSignText.classList.add('positive');
+      } else {
+        testChargeGraphic.chargeSignText.x = testChargeGraphic.chargeControl.x - 7;
+        testChargeGraphic.chargeSignText.y = testChargeGraphic.chargeControl.y + 12;
+
+        testChargeGraphic.chargeCircle.classList.remove('positive');
+        testChargeGraphic.chargeSignText.classList.remove('positive');
+
+        testChargeGraphic.chargeCircle.classList.add('negative');
+        testChargeGraphic.chargeSignText.classList.add('negative');
+      }
+    }
+  }
+
+  const updateCharges = (currentCharges: PointCharge[]) => {
+    if (!currentCharges) {
+      return;
+    }
+
+    // Handle normal charge change, or remove
+    const localCharges = graphicCharges.map(graphicCharge => graphicCharge.charge);
+    const changedCharges = currentCharges.filter(charge => charge.q !== (graphicCharges.map(graphicCharge => graphicCharge.charge)?.find(c => c.name === charge.name)?.q ?? charge.q));
+    const removedCharges = graphicCharges.filter(graphicCharge => !currentCharges.find(charge => charge.name === graphicCharge.charge.name));
+
+    removedCharges.forEach(graphicCharge => {
+      graphicCharge.chargeSignText.remove();
+      graphicCharge.chargeNameText.remove();
+      graphicCharge.chargePositionText.remove();
+      graphicCharge.chargeCircle.remove();
+      graphicCharge.arrow?.arrowHead.remove()
+      graphicCharge.arrow?.arrowBody.remove()
+      graphicCharge.arrow?.arrowText.remove()
+      graphicCharge.arrow?.arrowTextSubscript.remove()
+      graphicCharge.chargeControl.remove();
+      graphicCharges.splice(graphicCharges.indexOf(graphicCharge), 1);
+    })
+
+    changedCharges.forEach(currentCharge => {
+      const currentGraphicCharge = graphicCharges.find(graphicCharge => graphicCharge.charge.name === currentCharge.name);
+      if (!currentGraphicCharge) {
+        return
+      }
+      const isOldChargePositive = currentGraphicCharge.charge.q > 0;
+      const isNewChargePositive = currentCharge.q > 0;
+
+      currentGraphicCharge.chargePositionText.contents = `${currentCharge.q}e - <${currentCharge.position.x},${-currentCharge.position.y}>`;
+      currentGraphicCharge.charge.q = currentCharge.q;
+      if ((isOldChargePositive || isNewChargePositive) && !(isOldChargePositive && isNewChargePositive)) {
+        currentGraphicCharge.chargeSignText.contents = isNewChargePositive ? '+' : '-'
+        if (isNewChargePositive) {
+          currentGraphicCharge.chargeSignText.x = currentGraphicCharge.chargeControl.x - 12;
+          currentGraphicCharge.chargeSignText.y = currentGraphicCharge.chargeControl.y + 11;
+
+          currentGraphicCharge.chargeCircle.classList.remove('negative');
+          currentGraphicCharge.chargeSignText.classList.remove('negative');
+
+          currentGraphicCharge.chargeCircle.classList.add('positive');
+          currentGraphicCharge.chargeSignText.classList.add('positive');
+        } else {
+          currentGraphicCharge.chargeSignText.x = currentGraphicCharge.chargeControl.x - 7;
+          currentGraphicCharge.chargeSignText.y = currentGraphicCharge.chargeControl.y + 12;
+
+          currentGraphicCharge.chargeCircle.classList.remove('positive');
+          currentGraphicCharge.chargeSignText.classList.remove('positive');
+
+          currentGraphicCharge.chargeCircle.classList.add('negative');
+          currentGraphicCharge.chargeSignText.classList.add('negative');
+        }
+      }
+    })
+  }
+
+  return { updateTestCharge, updateCharges };
 }
