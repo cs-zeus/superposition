@@ -92,9 +92,11 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       graphicCharges.push({
         chargeControl: chargeControl, chargeSignText, chargeNameText, chargePositionText, chargeCircle, charge
       });
-    }
 
-    if (!isTestCharge) {
+      return {
+        chargeControl: chargeControl, chargeSignText, chargeNameText, chargePositionText, chargeCircle, charge
+      }
+    } else {
       const arrowBody = interactive.line(chargeControl.x, chargeControl.y, testChargeControl.x, testChargeControl.y);
       arrowBody.addDependency(testChargeControl);
       arrowBody.addDependency(chargeControl);
@@ -142,6 +144,12 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
           arrowHead, arrowBody, arrowText, arrowTextSubscript
         }
       });
+
+      return {
+        chargeControl: chargeControl, chargeSignText, chargeNameText, chargePositionText, chargeCircle, charge, arrow: {
+          arrowHead, arrowBody, arrowText, arrowTextSubscript
+        }
+      }
     }
   }
 
@@ -272,13 +280,28 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
   }
 
   const updateCharges = (currentCharges: PointCharge[]) => {
-    if (!currentCharges) {
+    if (currentCharges.length === 0) {
       return;
     }
 
-    // TODO: Handle case add charges
     const changedCharges = currentCharges.filter(charge => charge.q !== (graphicCharges.map(graphicCharge => graphicCharge.charge)?.find(c => c.name === charge.name)?.q ?? charge.q));
-    const removedCharges = graphicCharges.filter(graphicCharge => !currentCharges.find(charge => charge.name === graphicCharge.charge.name) && graphicCharge.charge.name !== 'Test Charge');
+    const removedCharges = graphicCharges.filter(graphicCharge => graphicCharge.charge.name !== 'Test Charge').filter(graphicCharge => !currentCharges.find(charge => charge.name === graphicCharge.charge.name));
+    const addedCharges = currentCharges.filter(currentCharge => !graphicCharges.find(graphicCharge => graphicCharge.charge.name === currentCharge.name)); //TODO: Handle case of adding new charges
+
+    const xGridNumber = Math.floor((interactive.width - 2 * margin) / w / 2);
+    const yGridNumber = Math.floor((interactive.height - 2 * margin) / h / 2);
+
+    addedCharges.forEach(newCharge => {
+      const graphicCharge = drawCharge(newCharge);
+      graphicCharge.chargeControl.constrainWithinBox(-(xGridNumber * w), -(yGridNumber * h), xGridNumber * w, yGridNumber * h);
+      const boxConstraint = graphicCharge.chargeControl.constrain;
+      graphicCharge.chargeControl.constrain = (_, n) => {
+        const x = w * Math.round(n.x / w);
+        const y = h * Math.round(n.y / h);
+        const p = boxConstraint({ x: x, y: y }, { x: x, y: y });
+        return { x: p.x, y: p.y };
+      };
+    })
 
     removedCharges.forEach(graphicCharge => {
       graphicCharge.chargeSignText.remove();
