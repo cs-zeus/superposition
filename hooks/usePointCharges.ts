@@ -14,7 +14,18 @@ export const usePointCharges = () => {
 	const addPointChargeHandler = (q: number) => {
 		setPointCharges((prev) => [
 			...prev,
-			{ name: `Charge ${prev.length + 1}`, position: { x: 0, y: 0 }, q },
+			{
+				name: `Charge ${
+					parseInt(
+						prev
+							.filter((charge) => charge.name != 'Test Charge')
+							.slice(-1)[0]
+							.name.split(' ')[1]
+					) + 1
+				}`,
+				position: { x: 0, y: 0 },
+				q,
+			},
 		]);
 	};
 
