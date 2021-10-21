@@ -8,14 +8,14 @@ import { Trash2 } from 'react-feather';
 
 type EditDeleteChargesSectionProps = {
 	charges: PointCharge[];
-	onDeleteHandler: (chargeName: string) => void;
-	onEditHandler: (charge: PointCharge) => void;
+	onDeleteCharge: (chargeName: string) => void;
+	onEditCharge: (charge: PointCharge) => void;
 };
 
 const EditDeleteChargesSection: React.FC<EditDeleteChargesSectionProps> = ({
 	charges,
-	onDeleteHandler,
-	onEditHandler,
+	onDeleteCharge,
+	onEditCharge,
 }) => {
 	return (
 		<Wrapper>
@@ -24,14 +24,14 @@ const EditDeleteChargesSection: React.FC<EditDeleteChargesSectionProps> = ({
 				const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 					const newCharge = {
 						...charge,
-						q: event.target.value,
-					} as any as PointCharge;
-					onEditHandler(newCharge);
+						q: parseInt(event.target.value),
+					} as PointCharge;
+					onEditCharge(newCharge);
 				};
 				const onIconClick: React.MouseEventHandler<SVGElement> = (
 					event: React.MouseEvent<SVGElement>
 				) => {
-					onDeleteHandler(charge.name);
+					onDeleteCharge(charge.name);
 				};
 				const lawLatex = `$${charge.name.split(' ').join('\\ ')}:\\ q = \\ $`;
 				return (

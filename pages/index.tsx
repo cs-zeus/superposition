@@ -53,8 +53,8 @@ const Home: NextPage = () => {
 					ConfigurationPane
 					<EditDeleteChargesSection
 						charges={charges}
-						onEditHandler={editChargeHandler}
-						onDeleteHandler={removePointChargeHandler}
+						onEditCharge={editChargeHandler}
+						onDeleteCharge={removePointChargeHandler}
 					/>
 					<CalculationResultSection charges={charges} testCharge={testCharge} />
 					<Footer onClickExplanationLink={openModalHandler} />
