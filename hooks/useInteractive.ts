@@ -92,7 +92,9 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       graphicCharges.push({
         chargeControl: chargeControl, chargeSignText, chargeNameText, chargePositionText, chargeCircle, charge
       });
-    } else {
+    }
+
+    if (!isTestCharge) {
       const arrowBody = interactive.line(chargeControl.x, chargeControl.y, testChargeControl.x, testChargeControl.y);
       arrowBody.addDependency(testChargeControl);
       arrowBody.addDependency(chargeControl);
@@ -231,13 +233,11 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     interactive.width += 2 * margin;
     interactive.height += 2 * margin;
     interactive.style.overflow = 'visible';
-    drawGraph([() => drawCharge(testCharge)]);
-    drawGraph(charges.map(charge => () => drawCharge(charge)));
-  }, [])
+    drawGraph([() => drawCharge(testCharge), ...charges.map(charge => () => drawCharge(charge))]);
+  }, []);
 
   const updateTestCharge = (currentTestCharge: TestCharge) => {
     const testChargeGraphic = graphicCharges.find(graphicCharge => graphicCharge.charge.name === currentTestCharge.name);
-
     if (!testChargeGraphic) {
       return;
     }
@@ -276,10 +276,9 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       return;
     }
 
-    // Handle normal charge change, or remove
-    const localCharges = graphicCharges.map(graphicCharge => graphicCharge.charge);
+    // TODO: Handle case add charges
     const changedCharges = currentCharges.filter(charge => charge.q !== (graphicCharges.map(graphicCharge => graphicCharge.charge)?.find(c => c.name === charge.name)?.q ?? charge.q));
-    const removedCharges = graphicCharges.filter(graphicCharge => !currentCharges.find(charge => charge.name === graphicCharge.charge.name));
+    const removedCharges = graphicCharges.filter(graphicCharge => !currentCharges.find(charge => charge.name === graphicCharge.charge.name) && graphicCharge.charge.name !== 'Test Charge');
 
     removedCharges.forEach(graphicCharge => {
       graphicCharge.chargeSignText.remove();
