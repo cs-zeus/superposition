@@ -30,10 +30,21 @@ export const usePointCharges = () => {
 	};
 
 	const editChargeHandler = (charge: PointCharge) => {
-		setPointCharges((prev) => [
-			...prev.filter((c) => c.name !== charge.name),
-			charge,
-		]);
+		setPointCharges((prev) =>
+			[...prev.filter((c) => c.name !== charge.name), charge].sort(
+				(charge1, charge2) => {
+					let name1 = charge1.name.toUpperCase();
+					let name2 = charge2.name.toUpperCase();
+					if (name1 < name2) {
+						return -1;
+					}
+					if (name1 > name2) {
+						return 1;
+					}
+					return 0;
+				}
+			)
+		);
 	};
 
 	const editPositionHandler = (charge: PointCharge) => {

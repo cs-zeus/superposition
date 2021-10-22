@@ -5,6 +5,10 @@ import SectionTitle from '../ui/SectionTitle';
 import TextField from '../ui/TextField';
 import Latex from 'react-latex-next';
 import { Trash2 } from 'react-feather';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const customSwal = withReactContent(Swal);
 
 type EditDeleteChargesSectionProps = {
 	charges: PointCharge[];
@@ -22,6 +26,15 @@ const EditDeleteChargesSection: React.FC<EditDeleteChargesSectionProps> = ({
 			<SectionTitle>Manage Charges</SectionTitle>
 			{charges.map((charge) => {
 				const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+					const newQ = parseInt(event.target.value);
+					if (newQ === 0 || isNaN(newQ)) {
+						customSwal.fire({
+							title: <WariningP>Warning</WariningP>,
+							html: (
+								<p>charge value should not be &quot;0&quot; or &quot; &quot;</p>
+							),
+						});
+					}
 					const newCharge = {
 						...charge,
 						q: parseInt(event.target.value),
@@ -37,7 +50,11 @@ const EditDeleteChargesSection: React.FC<EditDeleteChargesSectionProps> = ({
 				return (
 					<StyledParagraph key={'edit-delete-charges-' + charge.name}>
 						<Latex>{lawLatex}</Latex>
-						<TextField value={charge.q} onChange={onInputChange} />
+						<TextField
+							type='number'
+							value={charge.q}
+							onChange={onInputChange}
+						/>
 						<StyledTrash onClick={onIconClick} />
 					</StyledParagraph>
 				);
@@ -61,6 +78,10 @@ const StyledParagraph = styled(Paragraph)`
 const StyledTrash = styled(Trash2)`
 	margin-left: 8px;
 	vertical-align: bottom;
+`;
+
+const WariningP = styled.p`
+	color: var(--primary-color);
 `;
 
 export default EditDeleteChargesSection;
