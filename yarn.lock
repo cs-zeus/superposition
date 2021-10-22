@@ -966,10 +966,10 @@ crypto-browserify@3.12.0, crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
-cs-zeus@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/cs-zeus/-/cs-zeus-1.0.3.tgz#07acfc1177aa6105d5cae0dca78e709b90530818"
-  integrity sha512-f6QvmKx9J4x5Nqhjz1n1GtNvTOff3gPblt4KcHaW4U2KYuzjcGAhRmsx4DlRf2OOXbEg8vGbnyfIOO/SvMSUUw==
+cs-zeus@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/cs-zeus/-/cs-zeus-1.0.4.tgz#3e35b88cd518e58637fa99b18d580735e8427491"
+  integrity sha512-tBj2BeFooNDMskC3Xu1ii8Oik4qIs96nt21h2JGbguhVlRWF+7xp6/79lnJQ5zcx0x2qIKqY3jGsL9wgDywNDg==
 
 css.escape@1.5.1:
   version "1.5.1"
@@ -3251,6 +3251,16 @@ supports-color@^8.0.0:
   integrity sha512-MpUEN2OodtUzxvKQl72cUF7RQ5EiHsGvSsVG0ia9c5RbWGL2CI4C7EpPS8UTBIplnlzZiNuV56w+FuNxy3ty2Q==
   dependencies:
     has-flag "^4.0.0"
+
+sweetalert2-react-content@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/sweetalert2-react-content/-/sweetalert2-react-content-4.2.0.tgz#ab4a6e02e37150dd0ea34d00179ec76952e3f442"
+  integrity sha512-eB324swnq10UJH8nAH2S6GHuAKDgH6GpGU8vI+ulYdmlPzpb0T5QPc7O4RFNRx28GzVZUnfvtpxZbKtZ5/KOnQ==
+
+sweetalert2@^11.1.9:
+  version "11.1.9"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.1.9.tgz#f3948198119fab2de7014ccd7840cc4a6d671185"
+  integrity sha512-ox+BjtAbO8mJrbQH9TsNwMwLeTfV+ve33CVz/kKn5D/DhRiSqnw2rWL4HuBlh9Z4yqYlTD5viR5Z2K5D3avM7Q==
 
 table@^6.0.9:
   version "6.7.2"
