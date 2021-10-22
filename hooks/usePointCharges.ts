@@ -18,7 +18,7 @@ export const usePointCharges = () => {
 				name: `Charge ${
 					parseInt(
 						prev
-							.filter((charge) => charge.name != 'Test Charge')
+							.filter((charge) => charge.name !== 'Test Charge')
 							.slice(-1)[0]
 							.name.split(' ')[1]
 					) + 1
@@ -40,8 +40,8 @@ export const usePointCharges = () => {
 		setPointCharges((prev) =>
 			[...prev.filter((c) => c.name !== charge.name), charge].sort(
 				(charge1, charge2) => {
-					var name1 = charge1.name.toUpperCase();
-					var name2 = charge2.name.toUpperCase();
+					let name1 = charge1.name.toUpperCase();
+					let name2 = charge2.name.toUpperCase();
 					if (name1 < name2) {
 						return -1;
 					}

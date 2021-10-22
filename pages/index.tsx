@@ -1,3 +1,6 @@
+import CalculationResultSection from '../components/ConfigurationPane/CalculationResultSection';
+import EditDeleteChargesSection from '../components/ConfigurationPane/EditDeleteChargesSection';
+import Footer from '../components/ConfigurationPane/Footer';
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import SimulationPane from '../components/SimulationPane/SimulationPane';
@@ -5,9 +8,6 @@ import { TestCharge } from 'cs-zeus';
 import styled from '@emotion/styled';
 import { useAppConfig } from '../hooks/useAppConfig';
 import { usePointCharges } from '../hooks/usePointCharges';
-import CalculationResultSection from '../components/ConfigurationPane/CalculationResultSection';
-import Footer from '../components/ConfigurationPane/Footer';
-import EditDeleteChargesSection from '../components/ConfigurationPane/EditDeleteChargesSection';
 
 const Home: NextPage = () => {
 	const {
@@ -27,9 +27,9 @@ const Home: NextPage = () => {
 	const charges = pointCharges.filter(
 		(charge) => charge.name !== 'Test Charge'
 	);
-	const testCharge = pointCharges.filter(
+	const testCharge = pointCharges.find(
 		(charge) => charge.name === 'Test Charge'
-	)[0] as TestCharge;
+	) as TestCharge;
 	return (
 		<>
 			<Head>
