@@ -1,6 +1,3 @@
-import CalculationResultSection from '../components/ConfigurationPane/CalculationResultSection';
-import EditDeleteChargesSection from '../components/ConfigurationPane/EditDeleteChargesSection';
-import Footer from '../components/ConfigurationPane/Footer';
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import SimulationPane from '../components/SimulationPane/SimulationPane';
@@ -51,7 +48,6 @@ const Home: NextPage = () => {
 					/>
 				</LeftPane>
 				<RightPane>
-					{/* ConfigurationPane */}
 					<ConfigurationPane
 						charges={charges}
 						testCharge={testCharge} 
@@ -59,13 +55,6 @@ const Home: NextPage = () => {
 						onDeleteCharge={removePointChargeHandler}
 						onClickExplanationLink={openModalHandler} 
 					/>
-					{/* <EditDeleteChargesSection
-						charges={charges}
-						onEditCharge={editChargeHandler}
-						onDeleteCharge={removePointChargeHandler}
-					/>
-					<CalculationResultSection charges={charges} testCharge={testCharge} />
-					<Footer onClickExplanationLink={openModalHandler} /> */}
 				</RightPane>
 			</Wrapper>
 		</>
