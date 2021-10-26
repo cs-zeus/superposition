@@ -10,7 +10,7 @@ const TestChargeSection = () => {
         <Wrapper>
             <SectionTitle>Test Charges</SectionTitle>
             <FieldLabel>Electric Charge: </FieldLabel>
-            <TextField type='number' value='1'></TextField>
+            <TextField type='number' defaultValue='1' value='1'></TextField>
             <FieldLabel> e Columb</FieldLabel>
             <p>
                 <Latex>{equation}</Latex>
@@ -20,8 +20,7 @@ const TestChargeSection = () => {
 };
 
 const Wrapper = styled.div`
-  margin-top: 2rem;
-  padding: 2rem;
+  padding: 1rem 1rem 1rem 2rem;
   background-color: var(--primary-color);
 `;
 

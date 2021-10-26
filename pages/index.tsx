@@ -4,6 +4,7 @@ import Footer from '../components/ConfigurationPane/Footer';
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import SimulationPane from '../components/SimulationPane/SimulationPane';
+import ConfigurationPane from '../components/ConfigurationPane/ConfigurationPane';
 import { TestCharge } from 'cs-zeus';
 import styled from '@emotion/styled';
 import { useAppConfig } from '../hooks/useAppConfig';
@@ -50,14 +51,21 @@ const Home: NextPage = () => {
 					/>
 				</LeftPane>
 				<RightPane>
-					ConfigurationPane
-					<EditDeleteChargesSection
+					{/* ConfigurationPane */}
+					<ConfigurationPane
+						charges={charges}
+						testCharge={testCharge} 
+						onEditCharge={editChargeHandler}
+						onDeleteCharge={removePointChargeHandler}
+						onClickExplanationLink={openModalHandler} 
+					/>
+					{/* <EditDeleteChargesSection
 						charges={charges}
 						onEditCharge={editChargeHandler}
 						onDeleteCharge={removePointChargeHandler}
 					/>
 					<CalculationResultSection charges={charges} testCharge={testCharge} />
-					<Footer onClickExplanationLink={openModalHandler} />
+					<Footer onClickExplanationLink={openModalHandler} /> */}
 				</RightPane>
 			</Wrapper>
 		</>
