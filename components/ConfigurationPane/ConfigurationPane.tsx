@@ -30,7 +30,7 @@ const ConfigurationPane: React.FC<ConfigurationPaneProps> = ({
 		<Wrapper>
 			<Heading>Superposition Principle</Heading>
 			<AddChargeSection onAddCharge={onAddCharge} />
-			<TestChargeSection />
+			<TestChargeSection testCharge={testCharge} onEditCharge={onEditCharge} />
 			<EditDeleteChargesSection
 				charges={charges}
 				onEditCharge={onEditCharge}
