@@ -6,7 +6,7 @@ const PrimaryButton = styled.button`
 	padding: 4px 36px;
 	border-radius: 16px;
 	background: var(--accent-color);
-	color: var(--secondary-color);
+	color: var(--white);
 	border: 0;
 `;
 
