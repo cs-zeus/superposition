@@ -26,9 +26,6 @@ const ConfigurationPane: React.FC<ConfigurationPaneProps> = ({
 }) => {
 	return (
 		<Wrapper>
-			{/* <SectionWrapper>
-				<SectionTitle>Superposition Principle</SectionTitle>
-			</SectionWrapper> */}
       <Heading>Superposition Principle</Heading>
 			<AddChargeSection />
 			<TestChargeSection />
@@ -54,10 +51,6 @@ const Wrapper = styled.div`
 	min-height: 100vh;
 	background-color: var(--primary-color);
   overflow-x:hidden;
-`;
-
-const SectionWrapper = styled.div`
-	padding: 2rem 2rem;
 `;
 
 export default ConfigurationPane;
