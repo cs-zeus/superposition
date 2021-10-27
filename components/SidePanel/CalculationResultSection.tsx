@@ -5,19 +5,20 @@ import {
 	getElectricForceMultiplyByN,
 } from 'cs-zeus';
 import {
-	getVectorDistance,
-	getVectorSize,
-	subtractVector,
-	getUnitVector,
-} from 'cs-zeus/lib/vector';
-import styled from '@emotion/styled';
-import Latex from 'react-latex-next';
-import React from 'react';
-import SectionTitle from '../ui/SectionTitle';
-import {
 	buildLatexScientificNotation,
 	buildLatexUnitVectorMatrix,
 } from '../../utils/KatexUtilities';
+import {
+	getUnitVector,
+	getVectorDistance,
+	getVectorSize,
+	subtractVector,
+} from 'cs-zeus/lib/vector';
+
+import Latex from 'react-latex-next';
+import React from 'react';
+import SectionTitle from '../ui/SectionTitle';
+import styled from '@emotion/styled';
 
 type CalculationResultSectionProps = {
 	charges: PointCharge[];

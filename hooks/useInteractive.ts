@@ -253,12 +253,21 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       return;
     }
 
-    const isOldTestChargePositive = testChargeGraphic.charge.q > 0;
+    testChargeGraphic.chargeCircle.update = function () {
+      this.cx = testChargeGraphic.chargeControl.x;
+      this.cy = testChargeGraphic.chargeControl.y;
+
+      onChargePositionUpdate({
+        ...testCharge,
+        position: getVector(testChargeGraphic.chargeControl.x / w, testChargeGraphic.chargeControl.y / h)
+      })
+    };
+
     const isNewTestChargePositive = currentTestCharge.q > 0;
 
     testChargeGraphic.chargePositionText.contents = `${currentTestCharge.q}e - <${currentTestCharge.position.x},${-currentTestCharge.position.y}>`;
     testChargeGraphic.charge = currentTestCharge;
-    if ((isOldTestChargePositive || isNewTestChargePositive) && !(isOldTestChargePositive && isNewTestChargePositive)) {
+    if (testChargeGraphic.chargeCircle.classList.contains('negative') && isNewTestChargePositive || testChargeGraphic.chargeCircle.classList.contains('positive') && !isNewTestChargePositive) {
       testChargeGraphic.chargeSignText.contents = isNewTestChargePositive ? '+' : '-'
       if (isNewTestChargePositive) {
         testChargeGraphic.chargeSignText.x = testChargeGraphic.chargeControl.x - 12;
@@ -329,6 +338,18 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
 
       currentGraphicCharge.chargePositionText.contents = `${currentCharge.q}e - <${currentCharge.position.x},${-currentCharge.position.y}>`;
       currentGraphicCharge.charge.q = currentCharge.q;
+
+      currentGraphicCharge.chargeCircle.update = function () {
+        this.cx = currentGraphicCharge.chargeControl.x;
+        this.cy = currentGraphicCharge.chargeControl.y;
+
+        onChargePositionUpdate({
+          ...currentCharge,
+          position: getVector(currentGraphicCharge.chargeControl.x / w, currentGraphicCharge.chargeControl.y / h)
+        })
+      };
+
+
       if ((isOldChargePositive || isNewChargePositive) && !(isOldChargePositive && isNewChargePositive)) {
         currentGraphicCharge.chargeSignText.contents = isNewChargePositive ? '+' : '-'
         if (isNewChargePositive) {

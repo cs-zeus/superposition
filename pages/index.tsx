@@ -23,14 +23,6 @@ const Home: NextPage = () => {
 		removePointChargeHandler,
 	} = usePointCharges();
 
-	const charges = pointCharges.filter(
-		(charge) => charge.name !== 'Test Charge'
-	);
-
-	const testCharge = pointCharges.find(
-		(charge) => charge.name === 'Test Charge'
-	) as TestCharge;
-
 	return (
 		<>
 			<Head>
@@ -45,16 +37,28 @@ const Home: NextPage = () => {
 				<LeftPane>
 					<SimulationPane
 						appConfig={appConfig}
-						charges={charges}
-						testCharge={testCharge}
+						charges={pointCharges.filter(
+							(charge) => charge.name !== 'Test Charge'
+						)}
+						testCharge={
+							pointCharges.find(
+								(charge) => charge.name === 'Test Charge'
+							) as TestCharge
+						}
 						onChargePositionUpdate={editPositionHandler}
 					/>
 				</LeftPane>
 				<RightPane>
 					<SidePanel
 						appConfig={appConfig}
-						charges={charges}
-						testCharge={testCharge}
+						charges={pointCharges.filter(
+							(charge) => charge.name !== 'Test Charge'
+						)}
+						testCharge={
+							pointCharges.find(
+								(charge) => charge.name === 'Test Charge'
+							) as TestCharge
+						}
 						onAddCharge={addPointChargeHandler}
 						onEditCharge={editChargeHandler}
 						onDeleteCharge={removePointChargeHandler}
