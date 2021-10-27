@@ -1,6 +1,7 @@
 import TextField from '../ui/TextField';
 import Paragraph from '../ui/Paragraph';
 import PrimaryButton from '../ui/PrimaryButton';
+import SectionTitle from '../ui/SectionTitle';
 import styled from '@emotion/styled';
 import Latex from 'react-latex-next';
 
@@ -9,9 +10,9 @@ const equation = '$(e = 1.6 \\times 10^{-19})$';
 const AddChargeSection = () => {
 	return (
 		<Wrapper>
-			<Heading>Charges</Heading>
+			<SectionTitle>Charges</SectionTitle>
 			<NewParagraph>
-				Electric charge: <TextField defaultValue={0} /> <Span>e Columb</Span>
+				Electric charge: <TextField defaultValue={0}/> <Span>e Columb</Span>
 			</NewParagraph>
 			<NewParagraph>
 				<Span>
@@ -24,16 +25,8 @@ const AddChargeSection = () => {
 };
 
 const Wrapper = styled.div`
-	margin-top: 2rem;
-	padding: 2rem;
-  background-color: var(--primary-color);
-`;
-
-const Heading = styled.h2`
-	margin-bottom: 1rem;
-	color: var(--white);
-	font-size: 1.5rem;
-	font-weight: bold;
+	padding: 1rem 1rem 1rem 2rem;
+	background-color: var(--primary-color);
 `;
 
 const NewParagraph = styled(Paragraph)`
@@ -46,7 +39,8 @@ const Span = styled.span`
 `;
 
 const StyledButton = styled(PrimaryButton)`
-	margin: 1rem 0;
+	margin: 0;
+	margin-top:1rem;
 `;
 
 export default AddChargeSection;
