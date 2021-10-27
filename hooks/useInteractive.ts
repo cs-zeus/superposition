@@ -313,6 +313,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
         const p = boxConstraint({ x: x, y: y }, { x: x, y: y });
         return { x: p.x, y: p.y };
       };
+      graphicCharge.chargeControl.translate(graphicCharge.charge.position.x * w, graphicCharge.charge.position.y * h);
     })
 
     removedCharges.forEach(graphicCharge => {
