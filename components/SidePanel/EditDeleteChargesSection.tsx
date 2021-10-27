@@ -41,9 +41,7 @@ const EditDeleteChargesSection: React.FC<EditDeleteChargesSectionProps> = ({
 					} as PointCharge;
 					onEditCharge(newCharge);
 				};
-				const onIconClick: React.MouseEventHandler<SVGElement> = (
-					event: React.MouseEvent<SVGElement>
-				) => {
+				const onIconClick: React.MouseEventHandler<SVGElement> = () => {
 					onDeleteCharge(charge.name);
 				};
 				const lawLatex = `$${charge.name.split(' ').join('\\ ')}:\\ q = \\ $`;
@@ -55,7 +53,7 @@ const EditDeleteChargesSection: React.FC<EditDeleteChargesSectionProps> = ({
 							value={charge.q}
 							onChange={onInputChange}
 						/>
-						<StyledTrash onClick={onIconClick} />
+						<StyledTrash onClick={onIconClick} className={charges.length > 1 ? '' : 'hide'} />
 					</StyledParagraph>
 				);
 			})}
@@ -78,6 +76,10 @@ const StyledParagraph = styled(Paragraph)`
 const StyledTrash = styled(Trash2)`
 	margin-left: 8px;
 	vertical-align: bottom;
+
+	&.hide {
+		display: none;
+	}
 `;
 
 const WarningP = styled.p`
