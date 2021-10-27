@@ -1,7 +1,7 @@
+import ConfigurationPane from '../components/ConfigurationPane/ConfigurationPane';
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import SimulationPane from '../components/SimulationPane/SimulationPane';
-import ConfigurationPane from '../components/ConfigurationPane/ConfigurationPane';
 import { TestCharge } from 'cs-zeus';
 import styled from '@emotion/styled';
 import { useAppConfig } from '../hooks/useAppConfig';
@@ -50,10 +50,11 @@ const Home: NextPage = () => {
 				<RightPane>
 					<ConfigurationPane
 						charges={charges}
-						testCharge={testCharge} 
+						testCharge={testCharge}
+						onAddCharge={addPointChargeHandler}
 						onEditCharge={editChargeHandler}
 						onDeleteCharge={removePointChargeHandler}
-						onClickExplanationLink={openModalHandler} 
+						onClickExplanationLink={openModalHandler}
 					/>
 				</RightPane>
 			</Wrapper>
