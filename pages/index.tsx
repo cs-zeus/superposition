@@ -80,6 +80,7 @@ const LeftPane = styled.div`
 
 const RightPane = styled.div`
 	flex: 25;
+	max-width: 480px;
 	overflow: auto;
 `;
 
