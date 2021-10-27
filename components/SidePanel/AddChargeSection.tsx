@@ -39,7 +39,6 @@ const AddChargeSection: React.FC<AddChargesSectionProps> = ({
 			<NewParagraph>
 				Electric charge:{' '}
 				<TextField
-					defaultValue={initialChargeValue}
 					type='number'
 					value={chargeValue}
 					onChange={onInputChange}

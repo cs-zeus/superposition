@@ -1,5 +1,5 @@
-import SectionTitle from '../ui/SectionTitle';
 import Paragraph from '../ui/Paragraph';
+import SectionTitle from '../ui/SectionTitle';
 import ToggleButton from '../ui/ToggleButton';
 import styled from '@emotion/styled';
 import { useState } from 'react';
@@ -13,9 +13,9 @@ const ConfigSection = () => {
 
 	return (
 		<Wrapper>
-			<SectionTitle>Simulation Configuration</SectionTitle>
+			<SectionTitle>Configuration</SectionTitle>
 			<ParamWrapper>
-				<NewParagraph>Gridline</NewParagraph>
+				<NewParagraph>Grid</NewParagraph>
 				<ToggleButton onToggle={toggleHandler} isOn={isOnGrid} />
 			</ParamWrapper>
 		</Wrapper>

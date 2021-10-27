@@ -48,7 +48,6 @@ const TestChargeSection: React.FC<TestChargesSectionProps> = ({
 			<FieldLabel>Electric Charge: </FieldLabel>
 			<TextField
 				type='number'
-				defaultValue={initialChargeValue}
 				value={chargeValue}
 				onChange={onInputChange}
 			></TextField>

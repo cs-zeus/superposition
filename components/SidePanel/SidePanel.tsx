@@ -5,11 +5,11 @@ import CalculationResultSection from './CalculationResultSection';
 import ConfigSection from './ConfigSection';
 import EditDeleteChargesSection from './EditDeleteChargesSection';
 import Footer from './Footer';
-import SectionTitle from '../../components/ui/SectionTitle';
+import SectionTitle from '../ui/SectionTitle';
 import TestChargeSection from './TestChargeSection';
 import styled from '@emotion/styled';
 
-type ConfigurationPaneProps = {
+type SidePanelPaneProps = {
 	charges: PointCharge[];
 	testCharge: TestCharge;
 	onAddCharge: (q: number) => void;
@@ -18,7 +18,7 @@ type ConfigurationPaneProps = {
 	onClickExplanationLink: () => void;
 };
 
-const ConfigurationPane: React.FC<ConfigurationPaneProps> = ({
+const SidePanel: React.FC<SidePanelPaneProps> = ({
 	charges,
 	testCharge,
 	onAddCharge,
@@ -29,6 +29,7 @@ const ConfigurationPane: React.FC<ConfigurationPaneProps> = ({
 	return (
 		<Wrapper>
 			<Heading>Superposition Principle</Heading>
+			<ConfigSection />
 			<AddChargeSection onAddCharge={onAddCharge} />
 			<TestChargeSection testCharge={testCharge} onEditCharge={onEditCharge} />
 			<EditDeleteChargesSection
@@ -36,7 +37,6 @@ const ConfigurationPane: React.FC<ConfigurationPaneProps> = ({
 				onEditCharge={onEditCharge}
 				onDeleteCharge={onDeleteCharge}
 			/>
-			<ConfigSection />
 			<CalculationResultSection charges={charges} testCharge={testCharge} />
 			<Footer onClickExplanationLink={onClickExplanationLink} />
 		</Wrapper>
@@ -55,4 +55,4 @@ const Wrapper = styled.div`
 	overflow-x: hidden;
 `;
 
-export default ConfigurationPane;
+export default SidePanel;

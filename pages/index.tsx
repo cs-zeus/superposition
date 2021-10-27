@@ -1,6 +1,6 @@
-import ConfigurationPane from '../components/ConfigurationPane/ConfigurationPane';
 import Head from 'next/head';
 import type { NextPage } from 'next';
+import SidePanel from '../components/SidePanel/SidePanel';
 import SimulationPane from '../components/SimulationPane/SimulationPane';
 import { TestCharge } from 'cs-zeus';
 import styled from '@emotion/styled';
@@ -22,12 +22,15 @@ const Home: NextPage = () => {
 		editPositionHandler,
 		removePointChargeHandler,
 	} = usePointCharges();
+
 	const charges = pointCharges.filter(
 		(charge) => charge.name !== 'Test Charge'
 	);
+
 	const testCharge = pointCharges.find(
 		(charge) => charge.name === 'Test Charge'
 	) as TestCharge;
+	
 	return (
 		<>
 			<Head>
@@ -48,7 +51,7 @@ const Home: NextPage = () => {
 					/>
 				</LeftPane>
 				<RightPane>
-					<ConfigurationPane
+					<SidePanel
 						charges={charges}
 						testCharge={testCharge}
 						onAddCharge={addPointChargeHandler}

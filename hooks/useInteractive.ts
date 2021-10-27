@@ -286,7 +286,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
 
     const changedCharges = currentCharges.filter(charge => charge.q !== (graphicCharges.map(graphicCharge => graphicCharge.charge)?.find(c => c.name === charge.name)?.q ?? charge.q));
     const removedCharges = graphicCharges.filter(graphicCharge => graphicCharge.charge.name !== 'Test Charge').filter(graphicCharge => !currentCharges.find(charge => charge.name === graphicCharge.charge.name));
-    const addedCharges = currentCharges.filter(currentCharge => !graphicCharges.find(graphicCharge => graphicCharge.charge.name === currentCharge.name)); //TODO: Handle case of adding new charges
+    const addedCharges = currentCharges.filter(currentCharge => !graphicCharges.find(graphicCharge => graphicCharge.charge.name === currentCharge.name));
 
     const xGridNumber = Math.floor((interactive.width - 2 * margin) / w / 2);
     const yGridNumber = Math.floor((interactive.height - 2 * margin) / h / 2);
