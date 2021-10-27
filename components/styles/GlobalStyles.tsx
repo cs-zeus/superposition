@@ -17,6 +17,11 @@ const styles = css`
 		--text-color: #000000;
 	}
 
+	input[type='number']::-webkit-inner-spin-button,
+	input[type='number']::-webkit-outer-spin-button {
+		opacity: 1;
+	}
+
 	html,
 	body,
 	div,
