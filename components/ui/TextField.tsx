@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 
-
 const TextField = styled.input`
-  width: 30px;
+  width: 36px;
   border-radius: 16px;
   font-size: 1rem;
   color: var(--background);

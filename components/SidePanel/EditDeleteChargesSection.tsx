@@ -1,11 +1,11 @@
-import styled from '@emotion/styled';
-import { PointCharge } from 'cs-zeus';
-import Paragraph from '../ui/Paragraph';
-import SectionTitle from '../ui/SectionTitle';
-import TextField from '../ui/TextField';
 import Latex from 'react-latex-next';
-import { Trash2 } from 'react-feather';
+import Paragraph from '../ui/Paragraph';
+import { PointCharge } from 'cs-zeus';
+import SectionTitle from '../ui/SectionTitle';
 import Swal from 'sweetalert2';
+import TextField from '../ui/TextField';
+import { Trash2 } from 'react-feather';
+import styled from '@emotion/styled';
 import withReactContent from 'sweetalert2-react-content';
 
 const customSwal = withReactContent(Swal);
@@ -29,7 +29,7 @@ const EditDeleteChargesSection: React.FC<EditDeleteChargesSectionProps> = ({
 					const newQ = parseInt(event.target.value);
 					if (newQ === 0 || isNaN(newQ)) {
 						customSwal.fire({
-							title: <WariningP>Warning</WariningP>,
+							title: <WarningP>Warning</WarningP>,
 							html: (
 								<p>charge value should not be &quot;0&quot; or &quot; &quot;</p>
 							),
@@ -41,9 +41,7 @@ const EditDeleteChargesSection: React.FC<EditDeleteChargesSectionProps> = ({
 					} as PointCharge;
 					onEditCharge(newCharge);
 				};
-				const onIconClick: React.MouseEventHandler<SVGElement> = (
-					event: React.MouseEvent<SVGElement>
-				) => {
+				const onIconClick: React.MouseEventHandler<SVGElement> = () => {
 					onDeleteCharge(charge.name);
 				};
 				const lawLatex = `$${charge.name.split(' ').join('\\ ')}:\\ q = \\ $`;
@@ -55,7 +53,7 @@ const EditDeleteChargesSection: React.FC<EditDeleteChargesSectionProps> = ({
 							value={charge.q}
 							onChange={onInputChange}
 						/>
-						<StyledTrash onClick={onIconClick} />
+						<StyledTrash onClick={onIconClick} className={charges.length > 1 ? '' : 'hide'} />
 					</StyledParagraph>
 				);
 			})}
@@ -78,9 +76,13 @@ const StyledParagraph = styled(Paragraph)`
 const StyledTrash = styled(Trash2)`
 	margin-left: 8px;
 	vertical-align: bottom;
+
+	&.hide {
+		display: none;
+	}
 `;
 
-const WariningP = styled.p`
+const WarningP = styled.p`
 	color: var(--primary-color);
 `;
 

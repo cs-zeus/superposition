@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
+import SidePanel from '../components/SidePanel/SidePanel';
 import SimulationPane from '../components/SimulationPane/SimulationPane';
-import ConfigurationPane from '../components/ConfigurationPane/ConfigurationPane';
 import { TestCharge } from 'cs-zeus';
 import styled from '@emotion/styled';
 import { useAppConfig } from '../hooks/useAppConfig';
@@ -22,12 +22,7 @@ const Home: NextPage = () => {
 		editPositionHandler,
 		removePointChargeHandler,
 	} = usePointCharges();
-	const charges = pointCharges.filter(
-		(charge) => charge.name !== 'Test Charge'
-	);
-	const testCharge = pointCharges.find(
-		(charge) => charge.name === 'Test Charge'
-	) as TestCharge;
+
 	return (
 		<>
 			<Head>
@@ -42,18 +37,33 @@ const Home: NextPage = () => {
 				<LeftPane>
 					<SimulationPane
 						appConfig={appConfig}
-						charges={charges}
-						testCharge={testCharge}
+						charges={pointCharges.filter(
+							(charge) => charge.name !== 'Test Charge'
+						)}
+						testCharge={
+							pointCharges.find(
+								(charge) => charge.name === 'Test Charge'
+							) as TestCharge
+						}
 						onChargePositionUpdate={editPositionHandler}
 					/>
 				</LeftPane>
 				<RightPane>
-					<ConfigurationPane
-						charges={charges}
-						testCharge={testCharge} 
+					<SidePanel
+						appConfig={appConfig}
+						charges={pointCharges.filter(
+							(charge) => charge.name !== 'Test Charge'
+						)}
+						testCharge={
+							pointCharges.find(
+								(charge) => charge.name === 'Test Charge'
+							) as TestCharge
+						}
+						onAddCharge={addPointChargeHandler}
 						onEditCharge={editChargeHandler}
 						onDeleteCharge={removePointChargeHandler}
-						onClickExplanationLink={openModalHandler} 
+						onClickExplanationLink={openModalHandler}
+						onToggleGrid={toggleGridLineHandler}
 					/>
 				</RightPane>
 			</Wrapper>
@@ -74,6 +84,7 @@ const LeftPane = styled.div`
 
 const RightPane = styled.div`
 	flex: 25;
+	max-width: 480px;
 	overflow: auto;
 `;
 

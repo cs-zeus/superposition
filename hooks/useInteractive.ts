@@ -23,6 +23,7 @@ const h = initialHeightSize;
 const margin = 64;
 
 const graphicCharges: GraphicCharge[] = [];
+const graphicGridLines: Line[] = [];
 let testChargeControl: Control;
 let interactive: Interactive;
 
@@ -198,6 +199,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       if (hasGridLineEnabled) {
         const vertical = interactive.line(x, -(yGridNumber * h), x, yGridNumber * h);
         vertical.style.strokeOpacity = '.2';
+        graphicGridLines.push(vertical);
       }
     }
     for (let i = -yGridNumber; i <= yGridNumber; i++) {
@@ -208,6 +210,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       if (hasGridLineEnabled) {
         const horizontal = interactive.line(-(xGridNumber * w), y, xGridNumber * w, y);
         horizontal.style.strokeOpacity = '.2';
+        graphicGridLines.push(horizontal);
       }
     }
 
@@ -250,12 +253,21 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       return;
     }
 
-    const isOldTestChargePositive = testChargeGraphic.charge.q > 0;
+    testChargeGraphic.chargeCircle.update = function () {
+      this.cx = testChargeGraphic.chargeControl.x;
+      this.cy = testChargeGraphic.chargeControl.y;
+
+      onChargePositionUpdate({
+        ...testCharge,
+        position: getVector(testChargeGraphic.chargeControl.x / w, testChargeGraphic.chargeControl.y / h)
+      })
+    };
+
     const isNewTestChargePositive = currentTestCharge.q > 0;
 
     testChargeGraphic.chargePositionText.contents = `${currentTestCharge.q}e - <${currentTestCharge.position.x},${-currentTestCharge.position.y}>`;
     testChargeGraphic.charge = currentTestCharge;
-    if ((isOldTestChargePositive || isNewTestChargePositive) && !(isOldTestChargePositive && isNewTestChargePositive)) {
+    if (testChargeGraphic.chargeCircle.classList.contains('negative') && isNewTestChargePositive || testChargeGraphic.chargeCircle.classList.contains('positive') && !isNewTestChargePositive) {
       testChargeGraphic.chargeSignText.contents = isNewTestChargePositive ? '+' : '-'
       if (isNewTestChargePositive) {
         testChargeGraphic.chargeSignText.x = testChargeGraphic.chargeControl.x - 12;
@@ -286,7 +298,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
 
     const changedCharges = currentCharges.filter(charge => charge.q !== (graphicCharges.map(graphicCharge => graphicCharge.charge)?.find(c => c.name === charge.name)?.q ?? charge.q));
     const removedCharges = graphicCharges.filter(graphicCharge => graphicCharge.charge.name !== 'Test Charge').filter(graphicCharge => !currentCharges.find(charge => charge.name === graphicCharge.charge.name));
-    const addedCharges = currentCharges.filter(currentCharge => !graphicCharges.find(graphicCharge => graphicCharge.charge.name === currentCharge.name)); //TODO: Handle case of adding new charges
+    const addedCharges = currentCharges.filter(currentCharge => !graphicCharges.find(graphicCharge => graphicCharge.charge.name === currentCharge.name));
 
     const xGridNumber = Math.floor((interactive.width - 2 * margin) / w / 2);
     const yGridNumber = Math.floor((interactive.height - 2 * margin) / h / 2);
@@ -326,6 +338,18 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
 
       currentGraphicCharge.chargePositionText.contents = `${currentCharge.q}e - <${currentCharge.position.x},${-currentCharge.position.y}>`;
       currentGraphicCharge.charge.q = currentCharge.q;
+
+      currentGraphicCharge.chargeCircle.update = function () {
+        this.cx = currentGraphicCharge.chargeControl.x;
+        this.cy = currentGraphicCharge.chargeControl.y;
+
+        onChargePositionUpdate({
+          ...currentCharge,
+          position: getVector(currentGraphicCharge.chargeControl.x / w, currentGraphicCharge.chargeControl.y / h)
+        })
+      };
+
+
       if ((isOldChargePositive || isNewChargePositive) && !(isOldChargePositive && isNewChargePositive)) {
         currentGraphicCharge.chargeSignText.contents = isNewChargePositive ? '+' : '-'
         if (isNewChargePositive) {
@@ -351,5 +375,11 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     })
   }
 
-  return { updateTestCharge, updateCharges };
+  const updateGridLine = (isGridLineEnabled: boolean) => {
+    graphicGridLines.forEach(graphicGridLine => {
+      graphicGridLine.style.display = isGridLineEnabled ? 'block' : 'none';
+    })
+  }
+
+  return { updateTestCharge, updateCharges, updateGridLine };
 }

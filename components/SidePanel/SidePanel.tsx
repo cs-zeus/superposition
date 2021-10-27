@@ -1,35 +1,42 @@
-import styled from '@emotion/styled';
 import type { PointCharge, TestCharge } from 'cs-zeus';
 
-import SectionTitle from '../../components/ui/SectionTitle';
 import AddChargeSection from './AddChargeSection';
-import TestChargeSection from './TestChargeSection';
+import { AppConfig } from '../../types/AppConfig';
+import CalculationResultSection from './CalculationResultSection';
 import ConfigSection from './ConfigSection';
 import EditDeleteChargesSection from './EditDeleteChargesSection';
-import CalculationResultSection from './CalculationResultSection';
 import Footer from './Footer';
+import SectionTitle from '../ui/SectionTitle';
+import TestChargeSection from './TestChargeSection';
+import styled from '@emotion/styled';
 
-type ConfigurationPaneProps = {
+type SidePanelProps = {
+	appConfig: AppConfig;
 	charges: PointCharge[];
 	testCharge: TestCharge;
+	onAddCharge: (q: number) => void;
 	onDeleteCharge: (chargeName: string) => void;
 	onEditCharge: (charge: PointCharge) => void;
 	onClickExplanationLink: () => void;
+	onToggleGrid: (isGridOn: boolean) => void;
 };
 
-const ConfigurationPane: React.FC<ConfigurationPaneProps> = ({
+const SidePanel: React.FC<SidePanelProps> = ({
+	appConfig,
 	charges,
 	testCharge,
+	onAddCharge,
 	onEditCharge,
 	onDeleteCharge,
 	onClickExplanationLink,
+	onToggleGrid,
 }) => {
 	return (
 		<Wrapper>
-      <Heading>Superposition Principle</Heading>
-			<AddChargeSection />
-			<TestChargeSection />
-			<ConfigSection />
+			<Heading>Superposition Principle</Heading>
+			<ConfigSection isGridOn={appConfig.hasGridLineEnabled} onToggleGrid={onToggleGrid} />
+			<AddChargeSection onAddCharge={onAddCharge} />
+			<TestChargeSection testCharge={testCharge} onEditCharge={onEditCharge} />
 			<EditDeleteChargesSection
 				charges={charges}
 				onEditCharge={onEditCharge}
@@ -42,15 +49,15 @@ const ConfigurationPane: React.FC<ConfigurationPaneProps> = ({
 };
 
 const Heading = styled(SectionTitle)`
-  padding: 2rem 2rem 1rem 2rem;
-`
+	padding: 2rem 2rem 1rem 2rem;
+`;
 
 const Wrapper = styled.div`
 	box-sizing: border-box;
 	width: 100%;
 	min-height: 100vh;
 	background-color: var(--primary-color);
-  overflow-x:hidden;
+	overflow-x: hidden;
 `;
 
-export default ConfigurationPane;
+export default SidePanel;
