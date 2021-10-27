@@ -1,25 +1,26 @@
-import { HelpCircle } from 'react-feather';
+import { GitHub, HelpCircle } from 'react-feather';
+
 import styled from '@emotion/styled';
 
 type TextLinkProps = {
 	onClickLink: () => void;
-	hasIcon: boolean;
+	iconName: 'help' | 'github' | 'none';
 };
 
 const TextLink: React.FC<TextLinkProps> = ({
 	onClickLink,
-	hasIcon,
+	iconName = 'none',
 	children,
 }) => {
 	const StyledSpan = styled.span`
-		${hasIcon && 'margin-left: 8px;'}
+		${iconName !== 'none' && 'margin-left: 8px;'}
 		text-decoration: underline;
 	`;
 
 	const StyledP = styled.p`
 		display: flex;
 		align-items: center;
-		font-size: 1.5rem;
+		font-size: 1.125rem;
 		color: var(--white);
 
 		&:hover {
@@ -31,7 +32,17 @@ const TextLink: React.FC<TextLinkProps> = ({
 		}
 	`;
 
-	const icon = hasIcon ? <HelpCircle size={28} /> : null;
+	let icon;
+	switch (iconName) {
+		case 'help':
+			icon = <HelpCircle size={16} />;
+			break;
+		case 'github':
+			icon = <GitHub size={16} />;
+			break;
+		default:
+			icon = null;
+	}
 
 	return (
 		<StyledP onClick={onClickLink}>
