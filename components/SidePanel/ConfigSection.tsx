@@ -4,11 +4,20 @@ import ToggleButton from '../ui/ToggleButton';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-const ConfigSection = () => {
-	const [isOnGrid, setIsOnGrid] = useState(true);
+type ConfigSectionProps = {
+	isGridOn: boolean;
+	onToggleGrid: (isGridOn: boolean) => void;
+};
+
+const ConfigSection: React.FC<ConfigSectionProps> = ({
+	isGridOn,
+	onToggleGrid,
+}) => {
+	const [isOnGrid, setIsOnGrid] = useState(isGridOn);
 
 	const toggleHandler = () => {
 		setIsOnGrid((prevState) => !prevState);
+		onToggleGrid(isOnGrid);
 	};
 
 	return (

@@ -30,7 +30,7 @@ const Home: NextPage = () => {
 	const testCharge = pointCharges.find(
 		(charge) => charge.name === 'Test Charge'
 	) as TestCharge;
-	
+
 	return (
 		<>
 			<Head>
@@ -52,12 +52,14 @@ const Home: NextPage = () => {
 				</LeftPane>
 				<RightPane>
 					<SidePanel
+						appConfig={appConfig}
 						charges={charges}
 						testCharge={testCharge}
 						onAddCharge={addPointChargeHandler}
 						onEditCharge={editChargeHandler}
 						onDeleteCharge={removePointChargeHandler}
 						onClickExplanationLink={openModalHandler}
+						onToggleGrid={toggleGridLineHandler}
 					/>
 				</RightPane>
 			</Wrapper>

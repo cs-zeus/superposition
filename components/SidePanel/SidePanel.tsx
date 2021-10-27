@@ -1,6 +1,7 @@
 import type { PointCharge, TestCharge } from 'cs-zeus';
 
 import AddChargeSection from './AddChargeSection';
+import { AppConfig } from '../../types/AppConfig';
 import CalculationResultSection from './CalculationResultSection';
 import ConfigSection from './ConfigSection';
 import EditDeleteChargesSection from './EditDeleteChargesSection';
@@ -9,27 +10,31 @@ import SectionTitle from '../ui/SectionTitle';
 import TestChargeSection from './TestChargeSection';
 import styled from '@emotion/styled';
 
-type SidePanelPaneProps = {
+type SidePanelProps = {
+	appConfig: AppConfig;
 	charges: PointCharge[];
 	testCharge: TestCharge;
 	onAddCharge: (q: number) => void;
 	onDeleteCharge: (chargeName: string) => void;
 	onEditCharge: (charge: PointCharge) => void;
 	onClickExplanationLink: () => void;
+	onToggleGrid: (isGridOn: boolean) => void;
 };
 
-const SidePanel: React.FC<SidePanelPaneProps> = ({
+const SidePanel: React.FC<SidePanelProps> = ({
+	appConfig,
 	charges,
 	testCharge,
 	onAddCharge,
 	onEditCharge,
 	onDeleteCharge,
 	onClickExplanationLink,
+	onToggleGrid,
 }) => {
 	return (
 		<Wrapper>
 			<Heading>Superposition Principle</Heading>
-			<ConfigSection />
+			<ConfigSection isGridOn={appConfig.hasGridLineEnabled} onToggleGrid={onToggleGrid} />
 			<AddChargeSection onAddCharge={onAddCharge} />
 			<TestChargeSection testCharge={testCharge} onEditCharge={onEditCharge} />
 			<EditDeleteChargesSection

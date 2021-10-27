@@ -20,7 +20,7 @@ const SimulationPane: React.FC<SimulationPaneProps> = ({
 	onChargePositionUpdate,
 	appConfig,
 }) => {
-	const { updateCharges, updateTestCharge } = useInteractive(
+	const { updateCharges, updateTestCharge, updateGridLine } = useInteractive(
 		canvasId,
 		charges,
 		testCharge,
@@ -29,12 +29,16 @@ const SimulationPane: React.FC<SimulationPaneProps> = ({
 	);
 
 	useEffect(() => {
+		updateGridLine(appConfig.hasGridLineEnabled)
+	}, [appConfig])
+
+	useEffect(() => {
 		updateCharges(charges);
-	}, [charges]);
+	}, [charges, updateCharges]);
 
 	useEffect(() => {
 		updateTestCharge(testCharge);
-	}, [testCharge]);
+	}, [testCharge, updateTestCharge]);
 
 	return <Wrapper id={canvasId}></Wrapper>;
 };

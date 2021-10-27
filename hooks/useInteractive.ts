@@ -23,6 +23,7 @@ const h = initialHeightSize;
 const margin = 64;
 
 const graphicCharges: GraphicCharge[] = [];
+const graphicGridLines: Line[] = [];
 let testChargeControl: Control;
 let interactive: Interactive;
 
@@ -198,6 +199,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       if (hasGridLineEnabled) {
         const vertical = interactive.line(x, -(yGridNumber * h), x, yGridNumber * h);
         vertical.style.strokeOpacity = '.2';
+        graphicGridLines.push(vertical);
       }
     }
     for (let i = -yGridNumber; i <= yGridNumber; i++) {
@@ -208,6 +210,7 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
       if (hasGridLineEnabled) {
         const horizontal = interactive.line(-(xGridNumber * w), y, xGridNumber * w, y);
         horizontal.style.strokeOpacity = '.2';
+        graphicGridLines.push(horizontal);
       }
     }
 
@@ -351,5 +354,11 @@ export const useInteractive = (canvasId: string, charges: PointCharge[], testCha
     })
   }
 
-  return { updateTestCharge, updateCharges };
+  const updateGridLine = (isGridLineEnabled: boolean) => {
+    graphicGridLines.forEach(graphicGridLine => {
+      graphicGridLine.style.display = isGridLineEnabled ? 'block' : 'none';
+    })
+  }
+
+  return { updateTestCharge, updateCharges, updateGridLine };
 }
