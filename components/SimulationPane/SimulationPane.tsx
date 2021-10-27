@@ -30,7 +30,7 @@ const SimulationPane: React.FC<SimulationPaneProps> = ({
 
 	useEffect(() => {
 		updateGridLine(appConfig.hasGridLineEnabled)
-	}, [appConfig])
+	}, [appConfig, updateGridLine])
 
 	useEffect(() => {
 		updateCharges(charges);

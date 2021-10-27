@@ -68,7 +68,7 @@ const ListItem = styled.li`
 	margin-top: 8px;
 	text-transform: capitalize;
 
-	&:first-child {
+	&:first-of-type {
 		margin-top: 16px;
 	}
 `;
