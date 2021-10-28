@@ -61,6 +61,7 @@ const ModalBody = styled.div`
 `;
 
 const ModalHeader = styled.header`
+	border-radius: 16px 16px 0 0;	
 	position: fixed;
 	width: inherit;
 	margin-left: -32px;
