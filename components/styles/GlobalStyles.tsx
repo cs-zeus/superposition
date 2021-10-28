@@ -14,8 +14,12 @@ const styles = css`
 		--red: #eb5757;
 		--blue: #56ccf2;
 		--background: #303a52;
-		--text-color: #000000;
+		--text-color: #2c2c2c;
 		--black-alpha50: rgba(0, 0, 0, 0.5);
+	}
+
+	html {
+		scroll-behavior: smooth; 
 	}
 
 	input[type='number']::-webkit-inner-spin-button,
