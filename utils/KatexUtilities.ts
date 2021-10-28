@@ -17,7 +17,7 @@ export const buildLatexScientificNotation: (
 ) => string = (
 	value: number,
 	accumulator: number,
-	constantMultipler: string
+	constantMultiplier: string
 ) => {
 	if (value == 0 || isNaN(value)) {
 		return '0';
@@ -29,16 +29,16 @@ export const buildLatexScientificNotation: (
 		return buildLatexScientificNotation(
 			value / 10,
 			accumulator + 1,
-			constantMultipler
+			constantMultiplier
 		);
 	} else if (value < 1) {
 		return buildLatexScientificNotation(
 			value * 10,
 			accumulator - 1,
-			constantMultipler
+			constantMultiplier
 		);
 	}
 	return `${value.toFixed(
 		2
-	)}${constantMultipler} \\times ${10}^{${accumulator}}`;
+	)}${constantMultiplier} \\times ${10}^{${accumulator}}`;
 };

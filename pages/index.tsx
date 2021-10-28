@@ -1,3 +1,4 @@
+import ContentModal from '../components/Modal/ContentModal';
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import SidePanel from '../components/SidePanel/SidePanel';
@@ -67,6 +68,10 @@ const Home: NextPage = () => {
 					/>
 				</RightPane>
 			</Wrapper>
+			<ContentModal
+				isShow={appConfig.isShowModal}
+				onClose={closeModalHandler}
+			/>
 		</>
 	);
 };
