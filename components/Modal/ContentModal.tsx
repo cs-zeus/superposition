@@ -1,14 +1,9 @@
-import Image from 'next/image';
+import Image from '../ui/Image';
 import Latex from 'react-latex-next';
 import Link from 'next/link';
 import Modal from './Modal';
 import Paragraph from '../ui/Paragraph';
-import electricFieldImage1 from '../../public/images/electric_field/image1.png';
-import electricFieldImage2 from '../../public/images/electric_field/image2.png';
-import electricForceImage1 from '../../public/images/electric_force/image1.png';
-import electricForceImage2 from '../../public/images/electric_force/image2.png';
 import styled from '@emotion/styled';
-import superpositionImage1 from '../../public/images/superposition/image1.png';
 
 type ContentModalProps = {
 	isShow: boolean;
@@ -70,7 +65,10 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					force on any test charge.
 				</Paragraph>
 				<ImageWrapper>
-					<Image src={electricFieldImage1} alt='electric field 1' />
+					<Image
+						src='/images/electric_field/image1.png'
+						alt='electric field 1'
+					/>
 				</ImageWrapper>
 				<Paragraph>
 					Suppose we have{' '}
@@ -201,7 +199,10 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					of the source charges as the figure below
 				</Paragraph>
 				<ImageWrapper>
-					<Image src={electricFieldImage2} alt='electric field 2' />
+					<Image
+						src='/images/electric_field/image2.png'
+						alt='electric field 2'
+					/>
 				</ImageWrapper>
 				<Paragraph>
 					Notice that the calculation of the electric field makes no reference
@@ -265,7 +266,10 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					is a source charge.
 				</Paragraph>
 				<ImageWrapper>
-					<Image src={electricForceImage1} alt='electric force 1' />
+					<Image
+						src='/images/electric_force/image1.png'
+						alt='electric force 1'
+					/>
 				</ImageWrapper>
 				<Paragraph>
 					<strong>Electric force with direction</strong>
@@ -339,7 +343,10 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					Which can simulate the situation in the figure below
 				</Paragraph>
 				<ImageWrapper>
-					<Image src={electricForceImage2} alt='electric force 2' />
+					<Image
+						src='/images/electric_force/image2.png'
+						alt='electric force 2'
+					/>
 				</ImageWrapper>
 				<Paragraph>
 					From the equation, if the position of the charges change the force
@@ -383,7 +390,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					In the case of electric force consider the figure below.{' '}
 				</Paragraph>
 				<ImageWrapper>
-					<Image src={superpositionImage1} alt='superposition 1' />
+					<Image src='/images/superposition/image1.png' alt='superposition 1' />
 				</ImageWrapper>
 				<Paragraph>
 					By using the Superposition principle, we can compute net force by this
