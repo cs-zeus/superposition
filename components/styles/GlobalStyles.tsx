@@ -15,6 +15,7 @@ const styles = css`
 		--blue: #56ccf2;
 		--background: #303a52;
 		--text-color: #000000;
+		--black-alpha50: rgba(0, 0, 0, 0.5);
 	}
 
 	input[type='number']::-webkit-inner-spin-button,
