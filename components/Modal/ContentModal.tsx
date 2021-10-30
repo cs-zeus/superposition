@@ -142,7 +142,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					<LatexWrapper>
 						<Latex>
 							{
-								'$\\vec{F}_{Total} = \\frac{1}{4\\pi\\varepsilon_0}(\\frac{Qq_1}{r^2_1}\\hat{r}_1 + \\frac{Qq_2}{r^2_2}\\hat{r}_2+\\frac{Qq_3}{r^2_3}\\hat{r}_3 + ... +\\frac{Qq_N}{r^2_N}\\hat{r}_N)$'
+								'$\\vec{F}_{Total} = \\frac{1}{4\\pi\\varepsilon_0}(\\frac{Qq_1}{r^2_1}\\widehat{r}_1 + \\frac{Qq_2}{r^2_2}\\widehat{r}_2+\\frac{Qq_3}{r^2_3}\\widehat{r}_3 + ... +\\frac{Qq_N}{r^2_N}\\widehat{r}_N)$'
 							}
 						</Latex>
 					</LatexWrapper>
@@ -151,7 +151,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					<LatexWrapper>
 						<Latex>
 							{
-								'$\\vec{F}_{Total} = \\frac{Q}{4\\pi\\varepsilon_0}(\\frac{q_1}{r^2_1}\\hat{r}_1+ \\frac{q_2}{r^2_2}\\hat{r}_2+\\frac{q_3}{r^2_3}\\hat{r}_3 + ... +\\frac{q_N}{r^2_N}\\hat{r}_N)$'
+								'$\\vec{F}_{Total} = \\frac{Q}{4\\pi\\varepsilon_0}(\\frac{q_1}{r^2_1}\\widehat{r}_1+ \\frac{q_2}{r^2_2}\\widehat{r}_2+\\frac{q_3}{r^2_3}\\widehat{r}_3 + ... +\\frac{q_N}{r^2_N}\\widehat{r}_N)$'
 							}
 						</Latex>
 					</LatexWrapper>
@@ -167,7 +167,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					<LatexWrapper>
 						<Latex>
 							{
-								'$\\vec{E}_{Total} = \\frac{1}{4\\pi\\varepsilon_0}(\\frac{q_1}{r^2_1}\\hat{r}_1+ \\frac{q_2}{r^2_2}\\hat{r}_2+\\frac{q_3}{r^2_3}\\hat{r}_3 + ... +\\frac{q_N}{r^2_N}\\hat{r}_N)$'
+								'$\\vec{E}_{Total} = \\frac{1}{4\\pi\\varepsilon_0}(\\frac{q_1}{r^2_1}\\widehat{r}_1+ \\frac{q_2}{r^2_2}\\widehat{r}_2+\\frac{q_3}{r^2_3}\\widehat{r}_3 + ... +\\frac{q_N}{r^2_N}\\widehat{r}_N)$'
 							}
 						</Latex>
 					</LatexWrapper>
@@ -177,7 +177,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					<LatexWrapper>
 						<Latex>
 							{
-								'$\\vec{E}_{Total}(P) = \\frac{1}{4\\pi\\varepsilon_0}\\sum_{i=1}^{N}\\frac{q_i}{r^2_i}\\hat{r}_i$'
+								'$\\vec{E}_{Total}(P) = \\frac{1}{4\\pi\\varepsilon_0}\\sum_{i=1}^{N}\\frac{q_i}{r^2_i}\\widehat{r}_i$'
 							}
 						</Latex>
 					</LatexWrapper>
@@ -222,7 +222,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					<LatexWrapper>
 						<Latex>
 							{
-								'$\\vec{E} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{kq}{r^2}\\hat{r}$'
+								'$\\vec{E} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{kq}{r^2}\\widehat{r}$'
 							}
 						</Latex>
 					</LatexWrapper>
@@ -230,7 +230,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 				<Paragraph>Or simplify to be</Paragraph>
 				<CenteredParagraph>
 					<LatexWrapper>
-						<Latex>{'$\\vec{E} = \\frac{kq}{r^2}\\hat{r}$'}</Latex>
+						<Latex>{'$\\vec{E} = \\frac{kq}{r^2}\\widehat{r}$'}</Latex>
 					</LatexWrapper>
 				</CenteredParagraph>
 				<Paragraph>where</Paragraph>
@@ -278,7 +278,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					<LatexWrapper>
 						<Latex>
 							{
-								'$F_{1\\rightarrow\\ 2}=\\frac{1}{4\\pi\\varepsilon_0}\\frac{q_1 q_2}{r_{1\\rightarrow\\ 2}^2}\\hat{r}_{1\\rightarrow\\ 2}$'
+								'$F_{1\\rightarrow\\ 2}=\\frac{1}{4\\pi\\varepsilon_0}\\frac{q_1 q_2}{r_{1\\rightarrow\\ 2}^2}\\widehat{r}_{1\\rightarrow\\ 2}$'
 							}
 						</Latex>
 					</LatexWrapper>
@@ -334,7 +334,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					<LatexWrapper>
 						<Latex>
 							{
-								'$\\vec{F}_{Total} = \\frac{1}{4\\pi\\varepsilon_0}Q\\sum_{i=1}^{N}\\frac{q_i}{r_{i}^2}\\hat{r}_{i}$'
+								'$\\vec{F}_{Total} = \\frac{1}{4\\pi\\varepsilon_0}Q\\sum_{i=1}^{N}\\frac{q_i}{r_{i}^2}\\widehat{r}_{i}$'
 							}
 						</Latex>
 					</LatexWrapper>
@@ -404,7 +404,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					<LatexWrapper>
 						<Latex>
 							{
-								'$\\vec{F}_{Total} = \\frac{1}{4\\pi\\varepsilon_0}Q\\sum_{i=1}^{N}\\frac{q_i}{r_{i}^2}\\hat{r}_{i}$'
+								'$\\vec{F}_{Total} = \\frac{1}{4\\pi\\varepsilon_0}Q\\sum_{i=1}^{N}\\frac{q_i}{r_{i}^2}\\widehat{r}_{i}$'
 							}
 						</Latex>
 					</LatexWrapper>
@@ -421,7 +421,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					</LatexWrapper>{' '}
 					from the figure above.{' '}
 					<LatexWrapper>
-						<Latex>{'$\\hat{r_i}$'}</Latex>
+						<Latex>{'$\\widehat{r_i}$'}</Latex>
 					</LatexWrapper>{' '}
 					is the unit vector from any source{' '}
 					<LatexWrapper>
@@ -437,7 +437,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					<LatexWrapper>
 						<Latex>
 							{
-								'$\\vec{E}_{Total}(P) = \\frac{1}{4\\pi\\varepsilon_0}\\sum_{i=1}^{N}\\frac{q_i}{r^2_i}\\hat{r}_{i}$'
+								'$\\vec{E}_{Total}(P) = \\frac{1}{4\\pi\\varepsilon_0}\\sum_{i=1}^{N}\\frac{q_i}{r^2_i}\\widehat{r}_{i}$'
 							}
 						</Latex>
 					</LatexWrapper>
