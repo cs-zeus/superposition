@@ -66,7 +66,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 				</Paragraph>
 				<ImageWrapper>
 					<Image
-						src='./images/electric_field/image1.png'
+						src='https://cs-zeus.github.io/superposition/images/electric_field/image1.png'
 						alt='electric field 1'
 					/>
 				</ImageWrapper>
@@ -200,7 +200,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 				</Paragraph>
 				<ImageWrapper>
 					<Image
-						src='./images/electric_field/image2.png'
+						src='https://cs-zeus.github.io/superposition/images/electric_field/image2.png'
 						alt='electric field 2'
 					/>
 				</ImageWrapper>
@@ -267,7 +267,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 				</Paragraph>
 				<ImageWrapper>
 					<Image
-						src='./images/electric_force/image1.png'
+						src='https://cs-zeus.github.io/superposition/images/electric_force/image1.png'
 						alt='electric force 1'
 					/>
 				</ImageWrapper>
@@ -344,7 +344,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 				</Paragraph>
 				<ImageWrapper>
 					<Image
-						src='./images/electric_force/image2.png'
+						src='https://cs-zeus.github.io/superposition/images/electric_force/image2.png'
 						alt='electric force 2'
 					/>
 				</ImageWrapper>
@@ -390,7 +390,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ isShow, onClose }) => {
 					In the case of electric force consider the figure below.{' '}
 				</Paragraph>
 				<ImageWrapper>
-					<Image src='./images/superposition/image1.png' alt='superposition 1' />
+					<Image src='https://cs-zeus.github.io/superposition/images/superposition/image1.png' alt='superposition 1' />
 				</ImageWrapper>
 				<Paragraph>
 					By using the Superposition principle, we can compute net force by this
